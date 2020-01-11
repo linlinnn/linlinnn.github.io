@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://github.com/linlinnn/"/>
   <updated>2020-01-09T23:49:34.424Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://github.com/linlinnn/</id>
   
   <author>
     <name>linlinnn</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>dubbo扩展点</title>
-    <link href="http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/"/>
-    <id>http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/</id>
+    <link href="https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/"/>
+    <id>https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/</id>
     <published>2020-01-11T16:23:25.855Z</published>
     <updated>2020-01-09T23:49:34.424Z</updated>
     

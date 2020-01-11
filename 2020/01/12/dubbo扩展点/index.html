@@ -24,10 +24,10 @@
     <meta name="description" content="Dubbo扩展点加载机制1、Java SPI使用了策略模式，一个接口多种实现。只声明接口，具体的实现由程序之外的配置控制，用于具体实现的装配。 具体步骤如下： （1）定义一个接口以及对应的方法 （2）编写接口的实现类 （3）在META-INF&#x2F;services&#x2F; 目录下，创建一个接口全限定名命名的文件 （4）文件内容为具体实现类的全限定名，如果有多个，则用分行符分隔 （5）在代码中通过java.u">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dubbo扩展点">
-<meta property="og:url" content="http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/index.html">
+<meta property="og:url" content="https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/index.html">
 <meta property="og:site_name" content="linlinnn&#39;s Blog">
 <meta property="og:description" content="Dubbo扩展点加载机制1、Java SPI使用了策略模式，一个接口多种实现。只声明接口，具体的实现由程序之外的配置控制，用于具体实现的装配。 具体步骤如下： （1）定义一个接口以及对应的方法 （2）编写接口的实现类 （3）在META-INF&#x2F;services&#x2F; 目录下，创建一个接口全限定名命名的文件 （4）文件内容为具体实现类的全限定名，如果有多个，则用分行符分隔 （5）在代码中通过java.u">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-11T16:23:25.855Z">
 <meta property="article:modified_time" content="2020-01-09T23:49:34.424Z">
 <meta property="article:author" content="linlinnn">
@@ -95,13 +95,6 @@
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/custom" target="_blank" >
-                <i class="icon icon-lg icon-link"></i>
-                测试
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
               <a href="/categories"  >
                 <i class="icon icon-lg icon-th-list"></i>
                 Categories
@@ -112,6 +105,13 @@
               <a href="http://www.weibo.com/ysweb" target="_blank" >
                 <i class="icon icon-lg icon-weibo"></i>
                 Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
               </a>
             </li>
         
@@ -132,7 +132,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -259,17 +259,17 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2020-01-09T23:49:34.424Z" itemprop="dateUpdated">2020-01-10 07:49:34</time>
+    最后更新时间：<time datetime="2020-01-09T23:49:34.424Z" itemprop="dateUpdated">2020-01-10 07:49:34</time>
 </span><br>
 
 
         
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" target="_blank" rel="external">http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/</a>
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" target="_blank" rel="external">https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/</a>
         
     </div>
     
     <footer>
-        <a href="http://yoursite.com">
+        <a href="https://github.com/linlinnn">
             <img src="/img/avatar.jpg" alt="linlinnn">
             linlinnn
         </a>
@@ -293,7 +293,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&title=《dubbo扩展点》 — linlinnn's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&title=《dubbo扩展点》 — linlinnn's Blog&pic=https://github.com/linlinnn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -303,22 +303,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&title=《dubbo扩展点》 — linlinnn's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&title=《dubbo扩展点》 — linlinnn's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《dubbo扩展点》 — linlinnn's Blog&url=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《dubbo扩展点》 — linlinnn's Blog&url=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&via=https://github.com/linlinnn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -410,7 +410,7 @@
             
                 <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-            <span>This blog is licensed under a <a rel="license noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
         </p>
     </div>
     <div class="bottom">
@@ -432,7 +432,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&title=《dubbo扩展点》 — linlinnn's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&title=《dubbo扩展点》 — linlinnn's Blog&pic=https://github.com/linlinnn/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -442,22 +442,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&title=《dubbo扩展点》 — linlinnn's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&title=《dubbo扩展点》 — linlinnn's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《dubbo扩展点》 — linlinnn's Blog&url=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《dubbo扩展点》 — linlinnn's Blog&url=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/&via=https://github.com/linlinnn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -468,7 +468,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3awW7cMAwE0Pz/T6dATynQ9c6QUpMCz6dgk7X8dDCZoT4+4uvz9/X1569Xe4fnT17dP1+rvvDw8PBGj57c+nnJ50dJtuN5C56f5+X98fDw8K7xkmJw4/WdlJl8FTw8PLyfxkuWb8tD/vd4eHh4/y9v89DPzXrepuPh4eH9BN6sUY7igHjL8me4krXg4eHhxbzZAOx7f74+38PDw8MbTdXvxbWzF339nHh4eHgXePvQYTZCy7cg2aA3q+Dh4eFd4LVxwyZWyO+Qw6IShYeHh3eNd3aZthFP7tMePsDDw8M7yzvwr/5olLUfYhVZCx4eHt5RXt5APzffm+A1X/35k2hr8PDw8I7yNqFtG2RsNncYE+Ph4eEd5bVhwTBILaOH/TgNDw8P79/z8tB2NvTKs9Z2U96EuXh4eHhr3qw8tIFFvlb+SVGc8PDw8A7x2jLQLtwOrtotqIsBHh4e3pq3+kLQjud3zjd6+Mx4eHh4F3h5NNC20W34m5eEOlbGw8PDu8BrA4X8mm1lWyqK8RgeHh7egrdvWPPGOrn/5pDWX76Lh4eHd4F36mBW2/7uz0rlB7bw8PDwTvFm0UM+4soPBLTNdFTA8PDw8C7w8jl7O1FKfpu3y21jffjWeHh4eI8xRN6DnzpcNQtqo+3Dw8PDu8BrB2BJuNAevdpEwHlQgoeHh3eKdzZ6uHdIK9/uP1bEw8PDu8BrE4vNGa48qmhndNG38PDw8A7xPstr1uC2h7eSYdiqpcbDw8Nb8NqXb/tAsxf6Pp7Aw8PDu83Li8Fs4LQvJElhGFY/PDw8vAVvM5iflYSzFQwPDw/v5/OeX+j7v5w14i9PluHh4eF9E2/fELfRxia8wMPDw7vNm4URM9hsuPX8yZvCgIeHh3eUt48P9q/49sjXJlbGw8PDW/B+AdSdK/AOQ8RGAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3aQW7DMAwEwP7/0ynQa2B7SYpNDuNTEKeWRgUkmuTPT3y9/q77b6rfv96uq7v3Tz5w4eHh4bWmfnW9P7o6oWRpkrHuv78aCw8PD2+Pd7+V50Pmm/58DtGxhIeHh/dRXg/TC5STEfHw8PC+n5e/7+fsaiiPh4eH9z28ZJhJeqJ6bFSPogO5Fjw8PLyYVy2AfcPnxfoeHh4e3qCqXt18k+HzZ+bHzOXT8PDw8BZ49wFxL/CtTqj65HIzFh4eHt4Cr1fQqqYqTi1l9QUADw8P7yxvHi5P8h/3YXS1MeshmMbDw8M7xMu3+Dm7mm6olsTKwTQeHh5ei5cMUC2G5dt9nm5oLhkeHh7eGq9XWKqGvNUUxiS9O6rv4eHh4cW8PB2QJ3zzoyJvOyiE8nh4eHjLvF6ha9Iu0GvtKhxFeHh4eGu86hY/GT5PNOTPufwH4OHh4a3x8oJTr2yWpxKSxSoE8Xh4eHgLvPn2XU1YJNv6JPn70HSFh4eHN+b1ylq93+cLMU984OHh4f0/b17Uzyc3KYk9IPHw8PAWeJMwegKYt22VlwYPDw/vEK96MFTTvvndXjHs4Wl4eHh4a7w8OD51eMyXNWpZwMPDw1vj5UmH/HPv7mT5orcEPDw8vDFvMq08gO4FzdXj4aEMhoeHh3eUl7z2R91brYlOlqM6Hzw8PLxTvHnSNilQTRIfoxYHPDw8vDXeXrtA72nlc+zqb/Hw8PCO8iZFrzw9kZf887JZlCDGw8PDW+D1TpJJ4ao6Sm+BRgclHh4eXsDLX/6Tsv39ht5rLOilSPDw8PC2edXyUoKvgpO75aYBPDw8vC/g9Vqg8sMmn1v0ezw8PLyP8nqhdjUcrx4bxw4GPDw8vIU8ZzUfnDcZVNMcD41WeHh4eMu8SQEs37gn4XhvOfDw8PAWeL+jz/k+duoj+gAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

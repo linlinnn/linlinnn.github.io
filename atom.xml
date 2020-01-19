@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>linlinnn&#39;s Blog</title>
+  <title>linjunhua&#39;s Blog</title>
   
   
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/linlinnn/"/>
-  <updated>2020-01-09T23:49:34.424Z</updated>
+  <updated>2020-01-19T13:42:15.643Z</updated>
   <id>https://github.com/linlinnn/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>dubbo扩展点</title>
+    <title>Dubbo扩展点加载机制</title>
     <link href="https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/"/>
     <id>https://github.com/linlinnn/2020/01/12/dubbo%E6%89%A9%E5%B1%95%E7%82%B9/</id>
     <published>2020-01-11T16:23:25.855Z</published>
-    <updated>2020-01-09T23:49:34.424Z</updated>
+    <updated>2020-01-19T13:42:15.643Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Dubbo扩展点加载机制"><a href="#Dubbo扩展点加载机制" class="headerlink" title="Dubbo扩展点加载机制"></a>Dubbo扩展点加载机制</h2><h3 id="1、Java-SPI"><a href="#1、Java-SPI" class="headerlink" title="1、Java SPI"></a>1、Java SPI</h3><p>使用了策略模式，一个接口多种实现。只声明接口，具体的实现由程序之外的配置控制，用于具体实现的装配。</p><p>具体步骤如下：</p><p>（1）定义一个接口以及对应的方法</p><p>（2）编写接口的实现类</p><p>（3）在<code>META-INF/services/</code> 目录下，创建一个接口全限定名命名的文件</p><p>（4）文件内容为具体实现类的全限定名，如果有多个，则用分行符分隔</p><p>（5）在代码中通过<code>java.util.ServiceLoader</code> 来加载具体的实现类</p><h3 id="2、扩展点加载机制的改进"><a href="#2、扩展点加载机制的改进" class="headerlink" title="2、扩展点加载机制的改进"></a>2、扩展点加载机制的改进</h3><ol><li>初始化<ul><li>JDK SPI: 一次性实例化扩展点所有实现，初始化耗时，没有也加载浪费资源</li><li>Dubbo SPI: 加载配置文件中的类，并分为不同的种类缓存在内存中，不会立即全部初始化</li></ul></li><li>扩展点加载失败<ul><li>JDK SPI: 获取不到扩展的名称，不能打印正常的异常信息</li><li>Dubbo SPI: 抛出真实异常并打印日志，部分扩展点加载失败不会影响其他扩展点和整个框架的使用</li></ul></li><li>实现了IOC和AOP机制</li></ol><h3 id="3、扩展点的配置规范"><a href="#3、扩展点的配置规范" class="headerlink" title="3、扩展点的配置规范"></a>3、扩展点的配置规范</h3><table><thead><tr><th>规范名</th><th>规范说明</th></tr></thead><tbody><tr><td>SPI配置文件路径</td><td>META-INF/services/、META-INF/dubbo/、META-INF/dubbo/internal/</td></tr><tr><td></td><td>全路径类名</td></tr><tr><td>文件内容格式</td><td>key=value方式，多个用换行符分隔</td></tr></tbody></table><h3 id="4、扩展点的分类与缓存"><a href="#4、扩展点的分类与缓存" class="headerlink" title="4、扩展点的分类与缓存"></a>4、扩展点的分类与缓存</h3><p>Dubbo SPI</p><ul><li>Class缓存：Dubbo SPI获取扩展类时，先从缓存中读取。如果缓存中不存在，则加载配置文件，根据配置把Class缓存到内存中，不会直接初始化</li><li>实例缓存：基于性能考虑，Dubbo框架不仅会缓存Class，也会缓存Class实例化对象。先从缓存中读取，如果缓存中不存在，则重新加载并缓存起来，按需实例化并缓存</li></ul><p>扩展类种类</p><ul><li>普通扩展类</li><li>包装扩展类：Wrapper类没有具体的实现，只是做了通用逻辑的抽象，在构造方法中传入一个具体的扩展接口的实现</li><li>自适应扩展类：一个扩展接口有多种实现类，具体实现哪个实现类可以不写死在配置或代码中，在运行时，通过传入URL中的某些参数动态来确定。自适应特性<code>@Adaptive</code></li><li>其他缓存</li></ul><p>自适应和自动激活的区别？</p><p><code>isAssignableFrom</code> 和 <code>instanceof</code> 的区别？</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">父类.class.isAssignableFrom(子类.class)</span><br><span class="line"></span><br><span class="line">子类实例 instanceof 父类类型</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -35,6 +35,8 @@
     </summary>
     
     
+    
+      <category term="Dubbo" scheme="https://github.com/linlinnn/tags/Dubbo/"/>
     
   </entry>
   

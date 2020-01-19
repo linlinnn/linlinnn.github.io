@@ -3,14 +3,14 @@
   <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="description" content="linjunhua&#39;s Blog">
   <meta name="keyword" content="hexo-theme, vuejs">
   
     <link rel="shortcut icon" href="/css/images/logo.png">
   
   <title>
     
-      Tags | linlinnn&#39;s Blog
+      Tags | linjunhua&#39;s Blog
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -63,7 +63,7 @@
   
 
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="linlinnn's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="linjunhua's Blog" type="application/atom+xml">
 </head>
 <div class="wechat-share">
   <img src="/css/images/logo.png" />
@@ -74,7 +74,7 @@
   <div class="header-container">
     <a class="home-link" href="/">
       <div class="logo"></div>
-      <span>linlinnn's Blog</span>
+      <span>linjunhua's Blog</span>
     </a>
     <ul class="right-list">
       
@@ -92,19 +92,7 @@
       
         <li class="list-item">
           
-            <a href="/archives/" class="item-link">Archives</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
             <a href="/project/" class="item-link">Projects</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/about/" class="item-link">About</a>
           
         </li>
       
@@ -131,19 +119,7 @@
         
           <li class="menu-item">
             
-              <a href="/archives/" class="menu-link">Archives</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
               <a href="/project/" class="menu-link">Projects</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/about/" class="menu-link">About</a>
             
           </li>
         
@@ -159,14 +135,33 @@
 <main class="app-body">
   <div id="tag-cloud">
     
+      <a class="tag3" data-name="tag-Dubbo">Dubbo</a>
+    
   </div>
   
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-Dubbo">Dubbo</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2020/01/12/dubbo扩展点/">Dubbo扩展点加载机制</a>
+          </li>
+        </ul>
+        
+    </div>
+    
 </main>
 
 <script>
   (function () {
     var url = 'https://github.com/linlinnn/tags/index.html'
-    $('#article-banner').geopattern(url)
+    var option = {
+        color:'#42b983',     // 前景色
+        baseColor:'#42b983', // 背景色
+        generator:'xes', // 样式
+    };
+    var pattern = GeoPattern.generate('Mastering Markdown', option);
+    $('#article-banner').css('background-image', pattern.toDataUrl());
     $('.header').removeClass('fixed-header')
 
     var tag = location.hash.replace('#', '')
@@ -183,9 +178,9 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2020 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2020 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
     <br>
-    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+    Theme - <a href="https://github.com/yanm1ng/hexo-theme-vexo">Vexo</a>
   </p>
 </footer>
 

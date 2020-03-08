@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>代码精进之路——读书笔记（1） | linjunhua&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="代码精进之路">
+    <meta name="description" content="代码精进之路——读书笔记（1）1、前言​    很多时候看到自己写代码或是别人写的代码就觉得要吐了，可是又很困惑该如何改进，想起一首rap，当我总是被这些问题给缠住，慢慢地想要克服它变成一种难度，周末的时候买了本新书《代码精进之路》，原来这是很多程序员都会遇到的情况，软件的复杂性是一个基本特征，再加上源源不断的需求压力总是使开发人员妥协，引发破窗效应，系统越来越混乱。故此记录下一些很有启发的理念。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码精进之路——读书笔记（1）">
+<meta property="og:url" content="https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/index.html">
+<meta property="og:site_name" content="linjunhua&#39;s Blog">
+<meta property="og:description" content="代码精进之路——读书笔记（1）1、前言​    很多时候看到自己写代码或是别人写的代码就觉得要吐了，可是又很困惑该如何改进，想起一首rap，当我总是被这些问题给缠住，慢慢地想要克服它变成一种难度，周末的时候买了本新书《代码精进之路》，原来这是很多程序员都会遇到的情况，软件的复杂性是一个基本特征，再加上源源不断的需求压力总是使开发人员妥协，引发破窗效应，系统越来越混乱。故此记录下一些很有启发的理念。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-08T04:00:07.520Z">
+<meta property="article:modified_time" content="2020-03-08T04:01:20.188Z">
+<meta property="article:author" content="linlinnn">
+<meta property="article:tag" content="代码精进之路">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">linlinnn</h5>
+          <a href="mailto:linjunhuacode@163.com" title="linjunhuacode@163.com" class="mail">linjunhuacode@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">代码精进之路——读书笔记（1）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">代码精进之路——读书笔记（1）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-08T04:00:07.520Z" itemprop="datePublished" class="page-time">
+  2020-03-08
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#代码精进之路——读书笔记（1）"><span class="post-toc-number">1.</span> <span class="post-toc-text">代码精进之路——读书笔记（1）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、前言"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1、前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、命名规范"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2、命名规范</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1、代码注释"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">2.1、代码注释</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、函数"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3、函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1、单一职责法则"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">3.1、单一职责法则</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-2、优化判空"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">3.2、优化判空</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3、组合函数模式"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">3.3、组合函数模式</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-代码精进之路——读书笔记（1）"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">代码精进之路——读书笔记（1）</h1>
+        <div class="post-meta">
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="代码精进之路——读书笔记（1）"><a href="#代码精进之路——读书笔记（1）" class="headerlink" title="代码精进之路——读书笔记（1）"></a>代码精进之路——读书笔记（1）</h1><h2 id="1、前言"><a href="#1、前言" class="headerlink" title="1、前言"></a>1、前言</h2><p>​    很多时候看到自己写代码或是别人写的代码就觉得要吐了，可是又很困惑该如何改进，想起一首rap，当我总是被这些问题给缠住，慢慢地想要克服它变成一种难度，周末的时候买了本新书《代码精进之路》，原来这是很多程序员都会遇到的情况，软件的复杂性是一个基本特征，再加上源源不断的需求压力总是使开发人员妥协，引发破窗效应，系统越来越混乱。故此记录下一些很有启发的理念。</p>
+<h2 id="2、命名规范"><a href="#2、命名规范" class="headerlink" title="2、命名规范"></a>2、命名规范</h2><h3 id="2-1、代码注释"><a href="#2-1、代码注释" class="headerlink" title="2.1、代码注释"></a>2.1、代码注释</h3><p>​    如果注释是为了阐述代码背后的意图，那么这个注释是有意义的；</p>
+<p>​    如果注释是为了复述代码功能，那么有可能就意味着代码的坏味道；</p>
+<p>​    好的代码通过好的命名规范使得自身意图是显性化的，就如同看一篇说明文。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 复述代码功能：线程休眠2秒</span></span><br><span class="line"><span class="comment">// 阐述代码背后的意图：线程休眠2秒，为了等待相关系统处理结果</span></span><br><span class="line">Thread.sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 代码自释：不需要注释也能清楚获悉代码本意</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">waitProcessResultFromA</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">  &#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">    LOGGER.error(e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、函数"><a href="#3、函数" class="headerlink" title="3、函数"></a>3、函数</h2><h3 id="3-1、单一职责法则"><a href="#3-1、单一职责法则" class="headerlink" title="3.1、单一职责法则"></a>3.1、单一职责法则</h3><p>​    <code>SRP</code>（Single Responsibility Principle）单一职责法则，现阶段自身的系统抽象能力不足，还需要很多的经验和总结，但是将这一法则作用于函数是每个程序员都能够做到的，而将函数写好了，系统也会开始往好的方向衍进。</p>
+<p>​    一个函数由命名、入参、出参组成，只要明确这三个点的意义，函数实现起来也会变得清晰，拿leetcode上一道简单题打个比方。</p>
+<p>​    一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 <code>n</code> 级的台阶总共有多少种跳法。</p>
+<p>​    以前遇到这种问题总是会陷入一种难以言喻的递归模拟，但其实函数的职责是很明确的，返回n级台阶的跳法</p>
+<p>总数，入参为台阶级数，递归边界就是1级台阶只有1种跳法，2级台阶有两种跳法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数意义：台阶级数为floor层的跳法</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">jumpWays</span><span class="params">(<span class="keyword">int</span> floor)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(floor &lt;= <span class="number">2</span>) <span class="keyword">return</span> floor;</span><br><span class="line">    <span class="comment">// 翻译一下递归就是，跳一级，也可以跳两级，返回总共的跳法</span></span><br><span class="line">  	<span class="keyword">return</span> jumpWays(floor - <span class="number">1</span>) + jumpWays(floor - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    当然还要对递归子问题使用记忆化进行优化。</p>
+<p>​    这样就有一种感觉，写代码就是将需求以合适的方式复述出来，是一篇说明文。</p>
+<h3 id="3-2、优化判空"><a href="#3-2、优化判空" class="headerlink" title="3.2、优化判空"></a>3.2、优化判空</h3><p>​    <code>NPE</code>(Null Pointer Exception)是需要时刻注意判断的，这就让要获取一些属性链路比较长的属性时经常写出这种令人呕吐的代码，可以使用Java 8的新特性<code>Optional</code> 进行优化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为了获取user里的isocode</span></span><br><span class="line"><span class="keyword">if</span>(user != <span class="keyword">null</span>)&#123;</span><br><span class="line">	Address address = user.getAddress();</span><br><span class="line">  	<span class="keyword">if</span>(address != <span class="keyword">null</span>)&#123;</span><br><span class="line">    	Country country = address.getCountry();</span><br><span class="line">      	<span class="keyword">if</span>(country != <span class="keyword">null</span>)&#123;</span><br><span class="line">        	String isocode = country.getIsocode();</span><br><span class="line">      	&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 比起大量的if语句，这样的链式调用更符合思维</span></span><br><span class="line">String isocode = Optional.ofNullable(user)</span><br><span class="line">	.flatMap(User::getAddress)</span><br><span class="line">  	.flatMap(Address::getCountry)</span><br><span class="line">  	.map(Country::getIsocode)</span><br><span class="line">  	.orElse(<span class="string">"default"</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3、组合函数模式"><a href="#3-3、组合函数模式" class="headerlink" title="3.3、组合函数模式"></a>3.3、组合函数模式</h3><p>​    组合函数有助于代码保持精炼并易于复用，这样的代码就像一本很多说明文组成的书，入口函数是目录，目录的内容指向具体的私有函数。</p>
+<p>​    <code>Spring</code>中<code>BeanUtils#copyProperties</code> 方法有57行，太长的函数容易让人迷失陷入细节，增大理解难度。当然细节是很重要的，只不过一次只关注一个点更利于提高效率，把握住重点，经过分析，这个函数主要做了两件事：一、判断能不能copy，二、执行copy。因此入口函数拆分为两个步骤。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">copyProperties</span><span class="params">(Object dest, Object orig)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> IllegalAccessException, InvocationTargetException </span>&#123;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 1、checkDestAndOrig(dest, orig); 判断能不能copy</span></span><br><span class="line">    <span class="comment">// =========================================================</span></span><br><span class="line">    <span class="comment">// Validate existence of the specified beans</span></span><br><span class="line">    <span class="keyword">if</span> (dest == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException</span><br><span class="line">                (<span class="string">"No destination bean specified"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (orig == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No origin bean specified"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (log.isDebugEnabled()) &#123;</span><br><span class="line">        log.debug(<span class="string">"BeanUtils.copyProperties("</span> + dest + <span class="string">", "</span> +</span><br><span class="line">                  orig + <span class="string">")"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 2、copyOrigToDest(orig, dest); 执行copy，这段逻辑还是稍微长了，可以继续划分</span></span><br><span class="line">  	<span class="comment">// =========================================================</span></span><br><span class="line">    <span class="comment">// Copy the properties, converting as necessary</span></span><br><span class="line">    <span class="keyword">if</span> (orig <span class="keyword">instanceof</span> DynaBean) &#123;</span><br><span class="line">        DynaProperty origDescriptors[] =</span><br><span class="line">            ((DynaBean) orig).getDynaClass().getDynaProperties();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; origDescriptors.length; i++) &#123;</span><br><span class="line">            String name = origDescriptors[i].getName();</span><br><span class="line">            <span class="keyword">if</span> (getPropertyUtils().isWriteable(dest, name)) &#123;</span><br><span class="line">                Object value = ((DynaBean) orig).get(name);</span><br><span class="line">                copyProperty(dest, name, value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (orig <span class="keyword">instanceof</span> Map) &#123;</span><br><span class="line">        Iterator names = ((Map) orig).keySet().iterator();</span><br><span class="line">        <span class="keyword">while</span> (names.hasNext()) &#123;</span><br><span class="line">            String name = (String) names.next();</span><br><span class="line">            <span class="keyword">if</span> (getPropertyUtils().isWriteable(dest, name)) &#123;</span><br><span class="line">                Object value = ((Map) orig).get(name);</span><br><span class="line">                copyProperty(dest, name, value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="comment">/* if (orig is a standard JavaBean) */</span> &#123;</span><br><span class="line">        PropertyDescriptor origDescriptors[] =</span><br><span class="line">            getPropertyUtils().getPropertyDescriptors(orig);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; origDescriptors.length; i++) &#123;</span><br><span class="line">            String name = origDescriptors[i].getName();</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">"class"</span>.equals(name)) &#123;</span><br><span class="line">                <span class="keyword">continue</span>; <span class="comment">// No point in trying to set an object's class</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (getPropertyUtils().isReadable(orig, name) &amp;&amp;</span><br><span class="line">                getPropertyUtils().isWriteable(dest, name)) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Object value =</span><br><span class="line">                        getPropertyUtils().getSimpleProperty(orig, name);</span><br><span class="line">                    copyProperty(dest, name, value);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">                    ; <span class="comment">// Should not happen</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    很多时候只要多做一点点，就可以写出更好的代码。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+
+        
+        努力努力再努力
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/linlinnn">
+            <img src="/img/logo.jpg" alt="linlinnn">
+            linlinnn
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF/" rel="tag">代码精进之路</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/&title=《代码精进之路——读书笔记（1）》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/&title=《代码精进之路——读书笔记（1）》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《代码精进之路——读书笔记（1）》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/03/03/Java%E6%BA%90%E7%A0%81%E4%B9%8BThreadPoolExecutor/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Java源码之ThreadPoolExecutor</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>linlinnn &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/&title=《代码精进之路——读书笔记（1）》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/&title=《代码精进之路——读书笔记（1）》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《代码精进之路——读书笔记（1）》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/03/08/%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%BF%9B%E4%B9%8B%E8%B7%AF%E2%80%94%E2%80%94%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAE+CAAAAAAxUyPsAAAFMklEQVR42u3aQW7jSBAEQP//097rAjuSMrNoY4EJnQRbIpvRBFTMqq+v+PX9r9f7z7z6/Pu/5H9P1pYcLfnvYy98+PDhw4fv7SG2i3+1uG25T4EmZ8yv7g9HwIcPHz58+Ca+5ALev2+PkJcal8+3pVJugg8fPnz48P0m3/bwn0Bs5dQWHLS3BT58+PDhw/f7fO1jfIuYlEF3+ksYgQ8fPnz48N35tstLlrVt1dY+3wqXX+p14MOHDx8+fOUU1t/z/kfm+/Dhw4cP31/P912+7o/xlzCiXfl2rkIDHz58+PDhmzTyoLyNv9txtLaESri3FnvigA8fPnz48D3FlxcEOVOOtYXy+VVso3gfeh348OHDhw9fyddGA8mP+lNFzBYi5JT5ql4WLvjw4cOHD99DfMlyL5/Pl9sG98n2XEo0fPjw4cOH78K3TWQ9O8rWblLbPGjbDPXsHj58+PDhwzc1v9uCYEO5RA9bC3xrMLy8Onz48OHDh+/Adx8Ly5d4h7sUQPkN8WGr8OHDhw8fvgPfFpFvi7sXJVtYn298VMDhw4cPHz58E98W69c9gfgR/fv8empw7cP68eHDhw8fvpIvjwba9/mC7kHAZfgsP2N0Ffjw4cOHD99bvrZJnCzxqUA/Octl/VtY/6FNjg8fPnz48AW/zu1F5r/dWxu+LXo20JYVHz58+PDh+wm+lmmLv9uC4zLKlscZ24bhw4cPHz58OV/eGH5qIGwrNdogY9vOfP1fuTc+fPjw4cMX87XN7+2x/1Lc/ERroRgdwIcPHz58+Eq+C1kSc+dMG/o4hRcH922UgA8fPnz48N0jg58uNbY15I/6YwmSXDs+fPjw4cM38bU/5FsR0LbGt4i/3cI2UPjDfAE+fPjw4cMX87UP85eC5tmmdc6xHblo5OPDhw8fPnwx37OlQPKTn4TgW/TfIm5N9Jd1Hz58+PDhw1em4nk0sBUEyevZSKJdedsewIcPHz58+C58Wzv8p8uUNqrYNmYbhsOHDx8+fPguxUrewL4E9MllXy6yjeO3QOQP83348OHDhw/ftM48BG9LnEt80F72UyVL3jzAhw8fPnz4Nr6cqQ0F2tJna+QXc3mHYii6B/Hhw4cPH77//CUpHe5FTEuzrWGL7E/FDT58+PDhwzfxbQ/P91LgEhxsAUde3ETlFz58+PDhw3fgyyevLqfc+JI1tE36y0AAPnz48OHDd+fbWstbRN5uxtYaf7YBjw8fPnz48N358kXkje28DbAVIpcG/BZ5fLgV8OHDhw8fvpJvK0ceaDPHRcnG8dR5H7sH8eHDhw8fvrjgyEPw/DOXcyVHvoT128gdPnz48OHD954v+XJ+uCQgeCpcSOKGLQ4o1o8PHz58+PBNfNu4WFIQXMqa/GhbW/2BYAIfPnz48OE7zIxtRUbeOM/LoHtonscEOdaHmwYfPnz48OEL+NoY/fL5rRzJ93+DaBvqX3nVgw8fPnz48L3guzSh80Gx/IE/by3kR9jgPgQN+PDhw4cP35mvbXhvD/x5QfN+S9qIIV9b9C18+PDhw4ev5Nsi9TwKb1vmF6YWrl1PW+7gw4cPHz58r757j9qfjQPawiUvOLZYoY7s8eHDhw8fvrJZvp14e47ejtBuTLudRUmEDx8+fPjw/TBfUhw8FdbfN+CpIbmv9t7Bhw8fPnz4HuVrm80baL6FeXGzjdPhw4cPHz58z/IlYX1+4jz6z894Ceu3wiu6FfDhw4cPH76l610H60lrvG1y/x9ihUvRhg8fPnz48L1d7T+10GloljeZ3QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -20,7 +20,7 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
+    <meta name="keywords" content="Java源码">
     <meta name="description" content="Java源码之ConcurrentHashMap1、带着问题看源码Q1：ConcurrentHashMap为什么是线程安全的？ Q2：JDK1.7和1.8的ConcurrentHashMap有什么不同？ Q3：动态扩容策略是什么，如何多线程扩容的？ 2、数据存储结构先看JDK1.8的，数组 + 链表 + 红黑树，为了保证扩容时的线程安全，还增加了一种转移节点 1234567891011121314">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java源码之ConcurrentHashMap">
@@ -29,8 +29,9 @@
 <meta property="og:description" content="Java源码之ConcurrentHashMap1、带着问题看源码Q1：ConcurrentHashMap为什么是线程安全的？ Q2：JDK1.7和1.8的ConcurrentHashMap有什么不同？ Q3：动态扩容策略是什么，如何多线程扩容的？ 2、数据存储结构先看JDK1.8的，数组 + 链表 + 红黑树，为了保证扩容时的线程安全，还增加了一种转移节点 1234567891011121314">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-27T14:49:23.769Z">
-<meta property="article:modified_time" content="2020-03-02T17:05:08.698Z">
+<meta property="article:modified_time" content="2020-03-08T04:24:53.727Z">
 <meta property="article:author" content="linlinnn">
+<meta property="article:tag" content="Java源码">
 <meta name="twitter:card" content="summary">
     
         <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
@@ -136,7 +137,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Java源码之ConcurrentHashMap"><span class="post-toc-number">1.</span> <span class="post-toc-text">Java源码之ConcurrentHashMap</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、带着问题看源码"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1、带着问题看源码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、数据存储结构"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2、数据存储结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、初始化"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3、初始化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、查询元素"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">3、查询元素</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、添加元素"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">4、添加元素</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5、动态扩容"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">5、动态扩容</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6、对比JDK1-7"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">6、对比JDK1.7</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-1、数据存储结构"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">6.1、数据存储结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-2、查询元素"><span class="post-toc-number">1.7.2.</span> <span class="post-toc-text">6.2、查询元素</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-3、添加元素"><span class="post-toc-number">1.7.3.</span> <span class="post-toc-text">6.3、添加元素</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-4、动态扩容"><span class="post-toc-number">1.7.4.</span> <span class="post-toc-text">6.4、动态扩容</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Java源码之ConcurrentHashMap"><span class="post-toc-number">1.</span> <span class="post-toc-text">Java源码之ConcurrentHashMap</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、带着问题看源码"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1、带着问题看源码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、数据存储结构"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2、数据存储结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、初始化"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3、初始化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、查询元素"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">3、查询元素</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、添加元素"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">4、添加元素</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5、动态扩容"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">5、动态扩容</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6、对比JDK1-7"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">6、对比JDK1.7</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-1、数据存储结构"><span class="post-toc-number">1.7.1.</span> <span class="post-toc-text">6.1、数据存储结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-2、查询元素"><span class="post-toc-number">1.7.2.</span> <span class="post-toc-text">6.2、查询元素</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-3、添加元素"><span class="post-toc-number">1.7.3.</span> <span class="post-toc-text">6.3、添加元素</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-4、动态扩容"><span class="post-toc-number">1.7.4.</span> <span class="post-toc-text">6.4、动态扩容</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7、总结"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">7、总结</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -179,9 +180,23 @@
 
 <h3 id="6-4、动态扩容"><a href="#6-4、动态扩容" class="headerlink" title="6.4、动态扩容"></a>6.4、动态扩容</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法参数上的 node 是这次扩容后，需要添加到新的数组中的数据。</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rehash</span><span class="params">(HashEntry&lt;K,V&gt; node)</span> </span>&#123;</span><br><span class="line">    HashEntry&lt;K,V&gt;[] oldTable = table;</span><br><span class="line">    <span class="keyword">int</span> oldCapacity = oldTable.length;</span><br><span class="line">    <span class="comment">// 2 倍</span></span><br><span class="line">    <span class="keyword">int</span> newCapacity = oldCapacity &lt;&lt; <span class="number">1</span>;</span><br><span class="line">    threshold = (<span class="keyword">int</span>)(newCapacity * loadFactor);</span><br><span class="line">    <span class="comment">// 创建新数组</span></span><br><span class="line">    HashEntry&lt;K,V&gt;[] newTable =</span><br><span class="line">        (HashEntry&lt;K,V&gt;[]) <span class="keyword">new</span> HashEntry[newCapacity];</span><br><span class="line">    <span class="comment">// 新的掩码，如从 16 扩容到 32，那么 sizeMask 为 31，对应二进制 ‘000...00011111’</span></span><br><span class="line">    <span class="keyword">int</span> sizeMask = newCapacity - <span class="number">1</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 遍历原数组，将原数组位置 i 处的链表拆分到 新数组位置 i 和 i+oldCap 两个位置</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; oldCapacity ; i++) &#123;</span><br><span class="line">        <span class="comment">// e 是链表的第一个元素</span></span><br><span class="line">        HashEntry&lt;K,V&gt; e = oldTable[i];</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">            HashEntry&lt;K,V&gt; next = e.next;</span><br><span class="line">            <span class="comment">// 计算应该放置在新数组中的位置，</span></span><br><span class="line">            <span class="comment">// 假设原数组长度为 16，e 在 oldTable[3] 处，那么 idx 只可能是 3 或者是 3 + 16 = 19</span></span><br><span class="line">            <span class="keyword">int</span> idx = e.hash &amp; sizeMask;</span><br><span class="line">            <span class="keyword">if</span> (next == <span class="keyword">null</span>)   <span class="comment">// 该位置处只有一个元素</span></span><br><span class="line">                newTable[idx] = e;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">// Reuse consecutive sequence at same slot</span></span><br><span class="line">                <span class="comment">// 与1.8类似</span></span><br><span class="line">                HashEntry&lt;K,V&gt; lastRun = e;</span><br><span class="line">                <span class="keyword">int</span> lastIdx = idx;</span><br><span class="line">                <span class="keyword">for</span> (HashEntry&lt;K,V&gt; last = next;</span><br><span class="line">                     last != <span class="keyword">null</span>;</span><br><span class="line">                     last = last.next) &#123;</span><br><span class="line">                    <span class="keyword">int</span> k = last.hash &amp; sizeMask;</span><br><span class="line">                    <span class="keyword">if</span> (k != lastIdx) &#123;</span><br><span class="line">                        lastIdx = k;</span><br><span class="line">                        lastRun = last;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                newTable[lastIdx] = lastRun;</span><br><span class="line">                <span class="keyword">for</span> (HashEntry&lt;K,V&gt; p = e; p != lastRun; p = p.next) &#123;</span><br><span class="line">                    V v = p.value;</span><br><span class="line">                    <span class="keyword">int</span> h = p.hash;</span><br><span class="line">                    <span class="keyword">int</span> k = h &amp; sizeMask; <span class="comment">// 相当于 i 或 i + n </span></span><br><span class="line">                    HashEntry&lt;K,V&gt; n = newTable[k];</span><br><span class="line">                    <span class="comment">// 头插法</span></span><br><span class="line">                    newTable[k] = <span class="keyword">new</span> HashEntry&lt;K,V&gt;(h, p.key, v, n);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 插入新节点</span></span><br><span class="line">    <span class="keyword">int</span> nodeIndex = node.hash &amp; sizeMask; <span class="comment">// add the new node</span></span><br><span class="line">    node.setNext(newTable[nodeIndex]);</span><br><span class="line">    newTable[nodeIndex] = node;</span><br><span class="line">    table = newTable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>Q1：ConcurrentHashMap为什么是线程安全的？</p>
+<h2 id="7、总结"><a href="#7、总结" class="headerlink" title="7、总结"></a>7、总结</h2><p>Q1：ConcurrentHashMap为什么是线程安全的？</p>
 <p>Q2：JDK1.7和1.8的ConcurrentHashMap有什么不同？</p>
+<p>1、锁粒度和使用锁</p>
+<ul>
+<li>JDK1.7的ConcurrentHashMap通过分段锁机制减小锁的粒度，使用可重入锁ReentrantLock保证线程安全</li>
+<li>JDK1.8进一步缩小了锁的粒度至哈希槽，使用CAS机制和Synchronized（锁优化）保证线程安全</li>
+</ul>
+<p>2、并行度控制</p>
+<ul>
+<li>JDK1.7通过分段锁的个数控制并发，默认是16</li>
+<li>JDK1.8通过转移节点，扩容时并行度可以根据容器操作的频率进行动态的调整</li>
+</ul>
+<p>3、数据结构</p>
+<p>​    和HashMap一样，JDK1.8增加了红黑树和链表的转换，主要是兜底哈希函数效果不好的时候，查询性能至少能维持在O(logn)</p>
 <p>Q3：动态扩容策略是什么，如何多线程扩容的？</p>
+<p>​    扩容至原来的两倍，对原哈希表的数据进行重新散列</p>
+<p>​    转移节点和sizeCtl标识十分重要，当一个哈希槽的节点为转移节点时，put操作的线程会进行等待或帮助扩容，每个线程领取哈希表中的一段进行转移，转移完成后领取剩余断，扩容结束后更新sizeCtl，从而根据put的频繁程度并行度也会相应地动态变化。</p>
 
         </div>
 
@@ -208,6 +223,8 @@
 
         <div class="post-footer">
             
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java%E6%BA%90%E7%A0%81/" rel="tag">Java源码</a></li></ul>
+
 
             
 <div class="page-share-wrap">
@@ -261,7 +278,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/03/03/Java%E6%BA%90%E7%A0%81%E4%B9%8BThreadPoolExecutor/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Java源码之ThreadPoolExecutor</h4>
+      </a>
+    </div>
   
 
   

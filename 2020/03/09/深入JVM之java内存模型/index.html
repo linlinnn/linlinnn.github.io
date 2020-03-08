@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>深入JVM之java内存模型 | linjunhua&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Java内存模型基本概念​    Java内存模型的主要目的是定义程序中各种变量的访问规则，即关注在虚拟机中把变量值存储到内存和从内存中取出变量值的底层细节。 ​    Java内存模型规定所有的变量存储在主内存中。每条线程都有自己的工作内存，线程的工作内存中保存了被该线程使用的变量的主内存副本（不是复制整个对象，如对象的引用，对象中某个被线程访问到的字段），线程对变量的所有操作都必须在工作内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入JVM之java内存模型">
+<meta property="og:url" content="https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="linjunhua&#39;s Blog">
+<meta property="og:description" content="Java内存模型基本概念​    Java内存模型的主要目的是定义程序中各种变量的访问规则，即关注在虚拟机中把变量值存储到内存和从内存中取出变量值的底层细节。 ​    Java内存模型规定所有的变量存储在主内存中。每条线程都有自己的工作内存，线程的工作内存中保存了被该线程使用的变量的主内存副本（不是复制整个对象，如对象的引用，对象中某个被线程访问到的字段），线程对变量的所有操作都必须在工作内">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/memory-model.png">
+<meta property="article:published_time" content="2020-03-08T21:05:43.291Z">
+<meta property="article:modified_time" content="2020-03-08T21:08:27.297Z">
+<meta property="article:author" content="linlinnn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/memory-model.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">linlinnn</h5>
+          <a href="mailto:linjunhuacode@163.com" title="linjunhuacode@163.com" class="mail">linjunhuacode@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">深入JVM之java内存模型</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">深入JVM之java内存模型</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-08T21:05:43.291Z" itemprop="datePublished" class="page-time">
+  2020-03-09
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Java内存模型"><span class="post-toc-number">1.</span> <span class="post-toc-text">Java内存模型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本概念"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">基本概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#内存间交互操作"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">内存间交互操作</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#volatile"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">volatile</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#先行发生原则（Happens-Before）"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">先行发生原则（Happens-Before）</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-深入JVM之java内存模型"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">深入JVM之java内存模型</h1>
+        <div class="post-meta">
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <hr>
+<hr>
+<h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>​    Java内存模型的主要目的是定义程序中各种变量的访问规则，即关注在虚拟机中把变量值存储到内存和从内存中取出变量值的底层细节。</p>
+<p>​    Java内存模型规定所有的变量存储在主内存中。每条线程都有自己的工作内存，线程的工作内存中保存了被该线程使用的变量的主内存副本（不是复制整个对象，如对象的引用，对象中某个被线程访问到的字段），线程对变量的所有操作都必须在工作内存中进行，而不能直接读取主内存中的数据。不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量值的传递均需要通过主内存来完成。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/memory-model.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h2 id="内存间交互操作"><a href="#内存间交互操作" class="headerlink" title="内存间交互操作"></a>内存间交互操作</h2><p>​    关于主内存与工作内存之间具体的交互协议，即一个变量如何从主内存拷贝到工作内存，如何从工作内存同步回主内存的实现细节，Java内存模型中定义了以下8种操作来完成。Java虚拟机实现时必须保证这些操作是原子的，不可再分的。（double和long类型的变量有些特别，允许虚拟机将没有被volatile修饰的64位数据的读写操作划分为两次32位的操作来进行）</p>
+<ul>
+<li>lock：作用于主内存的变量，它把一个变量标识为一条线程独占的状态</li>
+<li>unlock：作用于主内存的变量，它把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定</li>
+<li>read：作用于主内存的变量，它把一个变量的值从主内存传输到线程的工作内存中</li>
+<li>load：作用于工作内存的变量，它把read操作从主内存中得到的变量值放入工作内存的变量副本中</li>
+<li>use：作用于工作内存的变量，它把工作内存中一个变量的值传递给执行引擎，每当虚拟机遇到一个需要使用变量的值得字节码指令时执行这个操作</li>
+<li>assign：作用于工作内存的变量，它把一个从执行引擎接受的值赋给工作内存的变量，每当虚拟机遇到一个给变量赋值的字节码指令时执行这个操作</li>
+<li>store：作用于工作内存的变量，它把工作内存中一个变量的值传送到主内存中</li>
+<li>write：作用于主内存的变量，它把store操作从工作内存中得到的变量的值放入主内存的变量中</li>
+</ul>
+<p>Java内存模型规定了在执行上述操作时必须满足如下规则：</p>
+<ul>
+<li>不允许read和load，store和write操作之一单独出现</li>
+<li>变量在工作内存中改变了之后必须把该变化同步回主内存</li>
+<li>不允许一个线程没有发生任何的assign操作就把工作内存同步回主内存</li>
+<li>一个新的变量只能从主内存中“诞生”</li>
+<li>一个变量同一时刻只能被一个线程lock，但同一个线程可以lock多次，然后执行相同次数的unlock才能释放</li>
+<li>对一个变量执行lock，将清空工作内存中此变量的值，在执行引擎使用这个变量前，需要重新执行load或assign操作初始化变量的值</li>
+<li>一个变量没有lock就不能unlock，也不允许去unlock一个被其他线程锁定的变量</li>
+<li>对一个变量unlock前，必须先把此变量同步回主内存中</li>
+</ul>
+<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p>当一个变量被定义成volatile之后，它将具备两项特性：</p>
+<ul>
+<li>保证此变量对所有线程的可见性，“可行性”指的是当一个线程修改了这个变量的值，新值对于其他线程来说是可以立即得知的，由于volatile只能保证可见性，在不符合以下两条规则的运算场景中，仍然要通过加锁来保证原子性<ul>
+<li>运算结果并不依赖变量的当前值，或者能够确保只有单一的线程修改变量的值</li>
+<li>变量不需要与其他的状态变量共同参与不变约束</li>
+</ul>
+</li>
+<li>禁止指令重排序优化，普通的变量仅会保证在该方法的执行过程中所有依赖赋值结果的地方都能获取到正确的记过，而不能保证变量赋值操作的顺序与程序代码的执行顺序一致。</li>
+</ul>
+<h2 id="先行发生原则（Happens-Before）"><a href="#先行发生原则（Happens-Before）" class="headerlink" title="先行发生原则（Happens-Before）"></a>先行发生原则（Happens-Before）</h2><ul>
+<li>程序次序规则：在一个线程内，按照控制流顺序，前面的操作先行发生于后面的操作（区分时间先后顺序）</li>
+<li>管程锁定规则：一个unlock操作先行发生于后面对同一个锁的lock操作</li>
+<li>volatile规则：对一个volatile变量的写操作先行发生于后面对这个变量的读操作</li>
+<li>线程启动规则：Thread的start先行发生于此线程的所有动作</li>
+<li>线程终止规则：线程的所有操作都先行发生于此线程的终止检测</li>
+<li>线程中断规则：对线程interrupt方法的调用先行发生于被中断线程的代码检测到中断事件的发生</li>
+<li>对象终结规则：一个对象的初始化完成先行发生于它的finalize方法的开始</li>
+<li>传递性：A先于B，B先于C，则A先于C</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+
+        
+        努力努力再努力
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/linlinnn">
+            <img src="/img/logo.jpg" alt="linlinnn">
+            linlinnn
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/&title=《深入JVM之java内存模型》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/&title=《深入JVM之java内存模型》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入JVM之java内存模型》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">深入JVM之java线程基础</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>linlinnn &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/&title=《深入JVM之java内存模型》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/&title=《深入JVM之java内存模型》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入JVM之java内存模型》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/03/09/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD8ElEQVR42u3dy27iUBAE0Pz/T082s4iU2FR1XyMWh1WUAXx9iFT0Q5qvr/jx78fj529+P+f+Vb9/f/9or37/nGMPHDhw4MAR32p+oOSSs/ecnTPhu38VDhw4cOA4y3F1+fufk8snN5b/axLzeejiwIEDB45P40iirg3j9orJlwAcOHDgwPHJHLOIzQu22Q1vzo8DBw4cOJ7gSNptCUc7uJqNpvIAfrBXigMHDhw4uinPsJz7zJ8f2e/AgQMHDhyjFYF2BW0TpZuParOQ9/+1OHDgwIFjzZEH0madro29vC24GXddnhkHDhw4cKw58uZdvgCXA7Xvlkf17IsCDhw4cODYcLRDnVnU5cVV0uzLT9UWezhw4MCBY8/RDpyea8/NFt3yDyBpX+LAgQMHjic4ZtHYxl5yoDwyZ0Vm9HeBAwcOHDhGHLOSqW295SOrHDEvJusuKQ4cOHDgWHAMM3k9qclvtR0mHSjhcODAgQPHiCMPp1l7rl1BaIvJDeiLKRwOHDhw4FhzzIq3DUpS8s2WJ4ZlJw4cOHDgWHPMDtFGchvnmzHSvijFgQMHDhx7jqT4yYu6WbDl0Zh/AMOJEg4cOHDgWHC0Lzu17jYbbp0ad71oDuLAgQMHjgVHvUA2ah3mqwazUN8sYeDAgQMHjqc5Zs3B/NBt3Lbl4ibOceDAgQPHnqNt0u1bgW3z8ex7vghyHDhw4MBxiGMfhLN4qxfX4vAenh8HDhw4cBziaFuEbatuf5XZqlwO+sf3Dhw4cODAMeJoW2yzhYMctG0+5s8pBlo4cODAgWPB0Q51NlF6//z83fLlibbYw4EDBw4ce448aNt23hPLCu1Hcv/7yw8PBw4cOHAsODaLcQnfprLMn9MuPRR/Fzhw4MCBY3LO+j8P2JRMbTznTck9KA4cOHDg2HPMWn6zMU970NlIrK5fr3qlOHDgwIFjxJEXV0UJFDcBTxVd+Qlx4MCBA8c7OfLb2ywrJGOk5ENqi8ACGgcOHDhwHOVI2nNJUZQHXn6rs9uuW5k4cODAgWPBsRkpJRfetPPaDyknq3ulOHDgwIGj5GibeglQvoHWUs7OWUzhcODAgQPHgiO//Ozos4B8TwDjwIEDB44nOGaXieJqVLC1lLOCs675cODAgQPHdj+hLtXaNmK7GLcZTSU/11g4cODAgeOWYxaueWTuG4unysiosYgDBw4cOA5xtEGVRG8LtGlKtt8dLs+PAwcOHDg+kmNWUOWNxQ3Wi6vjwIEDB463c7TDpzw+98OkBCXa78CBAwcOHGuOpDl4dryULEC0wZ+vWRzoleLAgQMHjvVCQ1s+tQsQSUDug7ZdjMCBAwcOHDHHN2M7fU8VAD8AAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

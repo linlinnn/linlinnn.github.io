@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>深入JVM之java线程基础 | linjunhua&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="深入JVM">
+    <meta name="description" content="Java线程Java线程状态 新建（New）：创建后未启动的线程 运行（Runnable）：正在执行或者正在等待操作系统为它分配执行时间 无限期等待（Waiting）：等待被其他线程显示唤醒 Object::wait() Thread::join() LockSupport::park()   限期等待（Timed Waiting）：一定时间后由系统自动唤醒 Thread::sleep() Obj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入JVM之java线程基础">
+<meta property="og:url" content="https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="linjunhua&#39;s Blog">
+<meta property="og:description" content="Java线程Java线程状态 新建（New）：创建后未启动的线程 运行（Runnable）：正在执行或者正在等待操作系统为它分配执行时间 无限期等待（Waiting）：等待被其他线程显示唤醒 Object::wait() Thread::join() LockSupport::park()   限期等待（Timed Waiting）：一定时间后由系统自动唤醒 Thread::sleep() Obj">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/thread-status.png">
+<meta property="og:image" content="https://github.com/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/mark-word.jpg">
+<meta property="article:published_time" content="2020-03-08T13:30:12.782Z">
+<meta property="article:modified_time" content="2020-03-08T13:33:36.277Z">
+<meta property="article:author" content="linlinnn">
+<meta property="article:tag" content="深入JVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/thread-status.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">linlinnn</h5>
+          <a href="mailto:linjunhuacode@163.com" title="linjunhuacode@163.com" class="mail">linjunhuacode@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">深入JVM之java线程基础</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">深入JVM之java线程基础</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-08T13:30:12.782Z" itemprop="datePublished" class="page-time">
+  2020-03-08
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Java线程"><span class="post-toc-number">1.</span> <span class="post-toc-text">Java线程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java线程状态"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Java线程状态</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程安全"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">线程安全</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#互斥同步"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">互斥同步</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#非阻塞同步"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">非阻塞同步</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#无同步方案"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">无同步方案</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#锁优化"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">锁优化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自旋锁与自适应自旋"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">自旋锁与自适应自旋</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#锁消除"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">锁消除</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#锁粗化"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">锁粗化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#轻量级锁"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text">轻量级锁</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#偏向锁"><span class="post-toc-number">1.4.5.</span> <span class="post-toc-text">偏向锁</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-深入JVM之java线程基础"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">深入JVM之java线程基础</h1>
+        <div class="post-meta">
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Java线程"><a href="#Java线程" class="headerlink" title="Java线程"></a>Java线程</h1><h2 id="Java线程状态"><a href="#Java线程状态" class="headerlink" title="Java线程状态"></a>Java线程状态</h2><ul>
+<li>新建（New）：创建后未启动的线程</li>
+<li>运行（Runnable）：正在执行或者正在等待操作系统为它分配执行时间</li>
+<li>无限期等待（Waiting）：等待被其他线程显示唤醒<ul>
+<li>Object::wait()</li>
+<li>Thread::join()</li>
+<li>LockSupport::park()</li>
+</ul>
+</li>
+<li>限期等待（Timed Waiting）：一定时间后由系统自动唤醒<ul>
+<li>Thread::sleep()</li>
+<li>Object::wait(Timeout)</li>
+<li>Thread::join(TImeout)</li>
+<li>LockSupport::parkNanos()</li>
+<li>LockSupport::parkUntil()</li>
+</ul>
+</li>
+<li>阻塞（Blocked）：等待获取排它锁</li>
+<li>结束（Terminated）：线程已经结束执行</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/thread-status.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>内核线程的调度成本主要来自于用户态与核心态的状态转换，而这两种状态转换的开销主要来自于响应中断、保护和恢复执行现场的成本</p>
+<h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><h3 id="互斥同步"><a href="#互斥同步" class="headerlink" title="互斥同步"></a>互斥同步</h3><p>​    <code>synchronized</code>持有锁是一个重量级的操作，Java的线程是映射到操作系统的原生内核线程之上的，如果要阻塞或唤醒一条线程，则需要操作系统帮忙完成，这就不可避免地陷入用户态到核心的转换，进行这种状态转换需要耗费很多的处理器时间</p>
+<p>​    除了synchronized关键字外，自JDK5，基于Lock接口，用户能够以非块结构来实现互斥同步</p>
+<p>​    重入锁<code>ReentrantLock</code> 是Lock接口的一种实现，它与synchronized很相似，相比增加了一些高级功能，主要由三项：等待可中断、可实现公平锁及锁可以绑定多个条件：</p>
+<ul>
+<li>等待可中断：当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。可中断特性对处理执行时间非常长的同步块很有帮助</li>
+<li>公平锁：多个线程等待同一个锁时，必须按照申请锁的时间顺序来依次获取锁，而非公平锁不保证这一点，使用非公平锁，将会导致<code>ReentrantLock</code> 性能急剧下降，影响吞吐量</li>
+<li>锁绑定多个条件：可以同时绑定多个<code>Condition</code> 对象</li>
+</ul>
+<blockquote>
+<p><code>synchronized</code>和<code>ReentrantLock</code> 都能够满足需求时，推荐使用synchronized</p>
+<ol>
+<li>同步地语义更加清晰</li>
+<li>Lock需要对应finally-unlock，但是synchronized会保证释放锁</li>
+<li>Lock和synchronized目前性能差不多，不过synchronized将来有更多的优化空间</li>
+</ol>
+</blockquote>
+<h3 id="非阻塞同步"><a href="#非阻塞同步" class="headerlink" title="非阻塞同步"></a>非阻塞同步</h3><p>​    互斥同步是一种悲观的并发策略（实际上虚拟机会优化掉很大一部分不必要的加锁），另一个选择是基于冲突检测的乐观并发策略，乐观并发策略需要“硬件指令集的发展”，因为要求操作和冲突检测这两个步骤具备原子性，这类指令常用的有：</p>
+<ul>
+<li><p>测试并设置（Test-and-Set）</p>
+</li>
+<li><p>获取并增加（Fetch-and-Increment）</p>
+</li>
+<li><p>交换（Swap）</p>
+</li>
+<li><p>比较并交换（Compare-and-Swap）</p>
+</li>
+<li><p>加载链接/条件储存（Load-Linked/Store-Conditonal）</p>
+<p>CAS指令需要三个操作数，分别是内存位置、旧的预期值、准备设置的新值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unsafe.class</span></span><br><span class="line"><span class="comment">// unsafe.getAndAddInt(this, valueOffset, 1) + 1</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAddInt</span><span class="params">(Object var1, <span class="keyword">long</span> var2, <span class="keyword">int</span> var4)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> var5;</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    var5 = <span class="keyword">this</span>.getIntVolatile(var1, var2);</span><br><span class="line">  &#125; <span class="keyword">while</span>(!<span class="keyword">this</span>.compareAndSwapInt(var1, var2, var5, var5 + var4));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> var5;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>无限循环中，不断尝试将一个比当前值大一的新值赋值给自己，如果失败了，则说明旧值已经发生变化</p>
+<p>ABA问题，可以通过一个带有标记原子引用类<code>AtomicStampedReference</code>， 大部分情况下ABA问题不会影响程序并发的正确性，如果要解决ABA问题，改为互斥同步可能会比原子类更为高效</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="无同步方案"><a href="#无同步方案" class="headerlink" title="无同步方案"></a>无同步方案</h2><p>线程本地存储（Thread Local Storage），每个线程持有一份变量副本，消除竞争关系</p>
+<h2 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h2><h3 id="自旋锁与自适应自旋"><a href="#自旋锁与自适应自旋" class="headerlink" title="自旋锁与自适应自旋"></a>自旋锁与自适应自旋</h3><p>​    现在的物理机器普通都是多核处理器系统，能够让两个或以上的能够同时并行执行，可以让后面请求锁的那个线程“稍等一会”，看看持有锁的线程是否很快就会释放锁。为了让线程等待，只需让线程执行一个忙循环（自旋），这项技术就是自旋锁</p>
+<p>​    自旋等待本身虽然避免了线程切换的开销，但它是要占用处理器时间的，所以如果锁被占用的时间很短，自旋等待的效果就好，反之则只会白白消耗处理器资源。因此自旋等待必须有一定的时间限制，如果自旋超过了限定的次数仍然没有成功获得锁，就应当使用传统的方式挂起线程。默认值是十次，-XX:PreBlockSpin设置</p>
+<p>​    不过无论是默认值还是用户指定的自旋次数，对整个Java虚拟机中所有的锁来说都是相同的。在JDK6中对自旋锁的优化，引入了自适应的自旋，由前一次在同一个锁的自旋时间及锁的拥有者的状态来决定。如果在同一个锁对象上，自旋等待刚刚成功获得过锁，并且持有锁的线程正在进行中，那么虚拟机就会认为这个自旋也很有可能再次成功，进而允许自旋等待持续更长的时间，比如持续100次忙循环。另一方面，如果对于某个锁，自旋很少成功获得过锁，那么以后就有可能忽略掉自旋的过程，直接挂起</p>
+<h3 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h3><p>​    锁消除是指虚拟机即时编译器在运行时，对一些代码要求同步，但是对被检测到不可能存在共享数据竞争的锁进行消除，主要依据是逃逸分析的数据支持。</p>
+<h3 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h3><p>​    虚拟机检测到一串操作都对同一对象的加锁，放大加锁的范围到整个操作序列的外部</p>
+<h3 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h3><p>​    在<code>没有多线程竞争</code>的前提下（大部分的锁，在整个同步周期内都不存在竞争），减少传统的重量级锁使用操作系统互斥量产生的性能消耗</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/mark-word.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h3 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h3><p>​    消除数据在无竞争情况下的同步原语，进一步提高程序的运行性能，即对比轻量级锁连CAS操作都省去</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+
+        
+        努力努力再努力
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/linlinnn">
+            <img src="/img/logo.jpg" alt="linlinnn">
+            linlinnn
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B7%B1%E5%85%A5JVM/" rel="tag">深入JVM</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《深入JVM之java线程基础》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《深入JVM之java线程基础》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入JVM之java线程基础》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/03/08/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B9%8BTCP/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">网络通信之TCP</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>linlinnn &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《深入JVM之java线程基础》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《深入JVM之java线程基础》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《深入JVM之java线程基础》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/03/08/%E6%B7%B1%E5%85%A5JVM%E4%B9%8Bjava%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD00lEQVR42u3cUY4aQQwE0Nz/0psLBCi7PEQrPb5WAYbuNx+eslv58yd+/bx9JZ+fXu3Vt96/+/4zZy8cOHDgwFFvNV/0q6W/v2ayseS1uwIOHDhw4HiCI9lSUpt2hTZ/Ny/D09uGAwcOHDj+L0dStJIQlZTwXcnEgQMHDhy/hWMa9qYNu92Gdw8KOHDgwIHjOY58G9O23VXM62/Dca8UBw4cOHC867ZFU/7f+/cj5ztw4MCBA8cwLDUx7Gq8NP2Vanc4cODAgaPm2DXs8kHUdAR11XzMiXHgwIEDxzc58lbablm7a/aF/AMTDhw4cOCoOXattN3waXroIRlcNcTjUx44cODAgSPgyAPSVTnMy3Byq3ZrjiIcDhw4cOA44tj9ZHI8LlrQsGTuoubLT+LAgQMHjgc4poWwL4c5d7LmBLTKpjhw4MCBY3WAIN9w3trLb8l01NR86x8RDgcOHDhwFBzTGNYEsKaUTmNh/kCAAwcOHDiuOJIodUWQtyPzaJc8Igx2hwMHDhw4ao5k0c3m8+B0NUZqDjrgwIEDB44rjmkoujr6sBspTePceO84cODAgaPgaMZF+eAnD4r5Q8BuJVFzEAcOHDhw1GOnadqbNuDyYw27RuQO9+WqcODAgQPHEcdzrbfd4YbkViUF9aBLigMHDhw4hhxNJMvD3vTv6VGG/rdw4MCBA0fPsWvhTY8pJLVsF/N2xyk+tAVx4MCBA0fBMR3/5428Zqu70dd0Fy+/iwMHDhw4ao5k2J+UzP7fm9bh9MBfhIgDBw4cOIYcySWaiUwe2KbNvjw0Dphw4MCBA0fNkUSvabvtucMK/TqjSIkDBw4cOI4mQdOtTn9gmizzzzRFuusd4sCBAweOn/A/5Wx+Mll6Erfyz+fvRgEPBw4cOHAUHLtQ1BTC6TRsusnqIQAHDhw4cNzkqeWBhj4sXYWufHiGAwcOHDi+w5G3BfMDartCm9A0sS2Cw4EDBw4cBcftkKm5TtNqzI81DJqDOHDgwIGj5tiNeXalcVd0n34gwIEDBw4cVxy7y03LWDPiSuASoA+3GQcOHDhw1Bx9oJoOpfLX7td3KDhw4MCB44pjVwibNmIT2Kbo4zKMAwcOHDhqjmnZ+9BcW5XJ/Ar9oCsfgOHAgQMHjoYjb9jl7bYnCuH0DucDJxw4cODA8QTHdDN53b6Kgs0NG6wKBw4cOHB8nSOPZN+H3h3dq54acODAgQNHzZEvZQp62+PcHb/AgQMHDhxXHNPtTaPXlLgp/NOBFg4cOHDguOXIW2nTpUeFLVjirmTuQh0OHDhw4Cg4/gJUSX1Pm4LIQQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

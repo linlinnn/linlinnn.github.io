@@ -29,7 +29,7 @@
 <meta property="og:description" content="代码精进之路——读书笔记（1）1、前言​    很多时候看到自己写代码或是别人写的代码就觉得要吐了，可是又很困惑该如何改进，想起一首rap，当我总是被这些问题给缠住，慢慢地想要克服它变成一种难度，周末的时候买了本新书《代码精进之路》，原来这是很多程序员都会遇到的情况，软件的复杂性是一个基本特征，再加上源源不断的需求压力总是使开发人员妥协，引发破窗效应，系统越来越混乱。故此记录下一些很有启发的理念。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-08T04:00:07.520Z">
-<meta property="article:modified_time" content="2020-03-08T04:01:20.188Z">
+<meta property="article:modified_time" content="2020-03-08T11:08:48.703Z">
 <meta property="article:author" content="linlinnn">
 <meta property="article:tag" content="代码精进之路">
 <meta name="twitter:card" content="summary">
@@ -164,12 +164,12 @@
 <p>​    一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 <code>n</code> 级的台阶总共有多少种跳法。</p>
 <p>​    以前遇到这种问题总是会陷入一种难以言喻的递归模拟，但其实函数的职责是很明确的，返回n级台阶的跳法</p>
 <p>总数，入参为台阶级数，递归边界就是1级台阶只有1种跳法，2级台阶有两种跳法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数意义：台阶级数为floor层的跳法</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">jumpWays</span><span class="params">(<span class="keyword">int</span> floor)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(floor &lt;= <span class="number">2</span>) <span class="keyword">return</span> floor;</span><br><span class="line">    <span class="comment">// 翻译一下递归就是，跳一级，也可以跳两级，返回总共的跳法</span></span><br><span class="line">  	<span class="keyword">return</span> jumpWays(floor - <span class="number">1</span>) + jumpWays(floor - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数意义：台阶级数为floor层的跳法</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">jumpWays</span><span class="params">(<span class="keyword">int</span> floor)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(floor &lt;= <span class="number">2</span>) <span class="keyword">return</span> floor;</span><br><span class="line">  <span class="comment">// 翻译一下递归就是，跳一级，也可以跳两级，返回总共的跳法</span></span><br><span class="line">  <span class="keyword">return</span> jumpWays(floor - <span class="number">1</span>) + jumpWays(floor - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>​    当然还要对递归子问题使用记忆化进行优化。</p>
 <p>​    这样就有一种感觉，写代码就是将需求以合适的方式复述出来，是一篇说明文。</p>
 <h3 id="3-2、优化判空"><a href="#3-2、优化判空" class="headerlink" title="3.2、优化判空"></a>3.2、优化判空</h3><p>​    <code>NPE</code>(Null Pointer Exception)是需要时刻注意判断的，这就让要获取一些属性链路比较长的属性时经常写出这种令人呕吐的代码，可以使用Java 8的新特性<code>Optional</code> 进行优化</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为了获取user里的isocode</span></span><br><span class="line"><span class="keyword">if</span>(user != <span class="keyword">null</span>)&#123;</span><br><span class="line">	Address address = user.getAddress();</span><br><span class="line">  	<span class="keyword">if</span>(address != <span class="keyword">null</span>)&#123;</span><br><span class="line">    	Country country = address.getCountry();</span><br><span class="line">      	<span class="keyword">if</span>(country != <span class="keyword">null</span>)&#123;</span><br><span class="line">        	String isocode = country.getIsocode();</span><br><span class="line">      	&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 比起大量的if语句，这样的链式调用更符合思维</span></span><br><span class="line">String isocode = Optional.ofNullable(user)</span><br><span class="line">	.flatMap(User::getAddress)</span><br><span class="line">  	.flatMap(Address::getCountry)</span><br><span class="line">  	.map(Country::getIsocode)</span><br><span class="line">  	.orElse(<span class="string">"default"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为了获取user里的isocode</span></span><br><span class="line"><span class="keyword">if</span>(user != <span class="keyword">null</span>)&#123;</span><br><span class="line">  Address address = user.getAddress();</span><br><span class="line">  	<span class="keyword">if</span>(address != <span class="keyword">null</span>)&#123;</span><br><span class="line">      Country country = address.getCountry();</span><br><span class="line">      	<span class="keyword">if</span>(country != <span class="keyword">null</span>)&#123;</span><br><span class="line">          String isocode = country.getIsocode();</span><br><span class="line">      	&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 比起大量的if语句，这样的链式调用更符合思维</span></span><br><span class="line">String isocode = Optional.ofNullable(user)</span><br><span class="line">  .flatMap(User::getAddress)</span><br><span class="line">  .flatMap(Address::getCountry)</span><br><span class="line">  .map(Country::getIsocode)</span><br><span class="line">  .orElse(<span class="string">"default"</span>);</span><br></pre></td></tr></table></figure>
 
 <h3 id="3-3、组合函数模式"><a href="#3-3、组合函数模式" class="headerlink" title="3.3、组合函数模式"></a>3.3、组合函数模式</h3><p>​    组合函数有助于代码保持精炼并易于复用，这样的代码就像一本很多说明文组成的书，入口函数是目录，目录的内容指向具体的私有函数。</p>
 <p>​    <code>Spring</code>中<code>BeanUtils#copyProperties</code> 方法有57行，太长的函数容易让人迷失陷入细节，增大理解难度。当然细节是很重要的，只不过一次只关注一个点更利于提高效率，把握住重点，经过分析，这个函数主要做了两件事：一、判断能不能copy，二、执行copy。因此入口函数拆分为两个步骤。</p>
@@ -257,7 +257,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/03/08/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B9%8BTCP/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">网络通信之TCP</h4>
+      </a>
+    </div>
   
 
   

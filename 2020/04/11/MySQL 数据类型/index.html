@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MySQL 数据类型 | linjunhua&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="MySQL">
+    <meta name="description" content="MySQL 数据类型整型   Type Storage (Bytes) Minimum Value Signed Minimum Value Unsigned Maximum Value Signed Maximum Value Unsigned    TINYINT 1 -128 0 127 255   SMALLINT 2 -32768 0 32767 65535   MEDIUMINT 3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 数据类型">
+<meta property="og:url" content="https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="linjunhua&#39;s Blog">
+<meta property="og:description" content="MySQL 数据类型整型   Type Storage (Bytes) Minimum Value Signed Minimum Value Unsigned Maximum Value Signed Maximum Value Unsigned    TINYINT 1 -128 0 127 255   SMALLINT 2 -32768 0 32767 65535   MEDIUMINT 3">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-11T15:08:26.348Z">
+<meta property="article:modified_time" content="2020-04-11T15:11:22.799Z">
+<meta property="article:author" content="linlinnn">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">linlinnn</h5>
+          <a href="mailto:linjunhuacode@163.com" title="linjunhuacode@163.com" class="mail">linjunhuacode@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MySQL 数据类型</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MySQL 数据类型</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-11T15:08:26.348Z" itemprop="datePublished" class="page-time">
+  2020-04-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MySQL-数据类型"><span class="post-toc-number">1.</span> <span class="post-toc-text">MySQL 数据类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#整型"><span class="post-toc-number">1.0.0.1.</span> <span class="post-toc-text">整型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#定点型（精确数字型）"><span class="post-toc-number">1.0.0.2.</span> <span class="post-toc-text">定点型（精确数字型）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#浮点型"><span class="post-toc-number">1.0.0.3.</span> <span class="post-toc-text">浮点型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#日期类型"><span class="post-toc-number">1.0.0.4.</span> <span class="post-toc-text">日期类型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#字符串类型"><span class="post-toc-number">1.0.0.5.</span> <span class="post-toc-text">字符串类型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Tip"><span class="post-toc-number">1.0.0.6.</span> <span class="post-toc-text">Tip</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-MySQL 数据类型"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MySQL 数据类型</h1>
+        <div class="post-meta">
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="MySQL-数据类型"><a href="#MySQL-数据类型" class="headerlink" title="MySQL 数据类型"></a>MySQL 数据类型</h1><h4 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h4><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Storage (Bytes)</th>
+<th>Minimum Value Signed</th>
+<th>Minimum Value Unsigned</th>
+<th>Maximum Value Signed</th>
+<th>Maximum Value Unsigned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYINT</td>
+<td>1</td>
+<td>-128</td>
+<td>0</td>
+<td>127</td>
+<td>255</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>2</td>
+<td>-32768</td>
+<td>0</td>
+<td>32767</td>
+<td>65535</td>
+</tr>
+<tr>
+<td>MEDIUMINT</td>
+<td>3</td>
+<td>-8388608</td>
+<td>0</td>
+<td>8388607</td>
+<td>16777215</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>4</td>
+<td>-2147483648</td>
+<td>0</td>
+<td>2147483647</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>8</td>
+<td>-2^63</td>
+<td>0</td>
+<td>2^63-1</td>
+<td>2^64-1</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>自增主键推荐使用bigint</p>
+<p>int类型推荐使用默认signed，一则数据量级不足可选择bigint，二则避免小-大会越界的问题</p>
+<p>整数类型的(N)，N表示的和数字范围无关，如果使用zerofill的话，不足的位会填0</p>
+</blockquote>
+<h4 id="定点型（精确数字型）"><a href="#定点型（精确数字型）" class="headerlink" title="定点型（精确数字型）"></a>定点型（精确数字型）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">salary DECIMAL(5,2)</span><br><span class="line">#-999.99 to 999.99</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> maximum number of digits for DECIMAL is 65，默认是DECIMAL(10, 0)</p>
+<p> 16位就已经到千兆级别了，所以定义金钱类型可以使用DECIMAL，注意小数点scale范围不够是会截断四舍五入的，金钱类型到分，毫就已经完全够了，DECIMAL(18, 3)，就是百兆，可精确到毫，一般而言都够用了</p>
+</blockquote>
+<h4 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h4><p>MySQL uses four bytes for single-precision values and eight bytes for double-precision values.</p>
+<p><strong>FLOAT(M,D)</strong> - 不能使用无符号的浮点数字。可以定义显示长度(M)和小数位数(D)。这不是必需的，并且默认为10,2。其中2是小数的位数，10是数字(包括小数)的总数。小数精度可以到24个浮点。</p>
+<p>*<em>DOUBLE(M,D) *</em>- 不能使用无符号的双精度浮点数。可以定义显示长度(M)和小数位数(D)。 这不是必需的，默认为16,4，其中4是小数的位数。小数精度可以达到53位的DOUBLE。 REAL是DOUBLE同义词。</p>
+<blockquote>
+<p>For example, a column defined as   FLOAT(7,4) will look like    -999.9999 when displayed. MySQL performs rounding when storing values, so if you insert   999.00009 into a  FLOAT(7,4) column, the approximate result is  999.0001.</p>
+</blockquote>
+<h4 id="日期类型"><a href="#日期类型" class="headerlink" title="日期类型"></a>日期类型</h4><table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>“Zero” Value</th>
+<th>Storage (Bytes)</th>
+<th>Time Range</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DATE</td>
+<td>0000-00-00</td>
+<td>3</td>
+<td>1000-01-01 to 9999-12-31</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>00:00:00</td>
+<td></td>
+<td>-838:59:59 to 838:59:59</td>
+</tr>
+<tr>
+<td>DATETIME</td>
+<td>0000-00-00 00:00:00</td>
+<td>8</td>
+<td>1000-01-01 00:00:00 to 9999-12-31        23:59:59</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>0000-00-00 00:00:00</td>
+<td>4</td>
+<td>1970-01-01 00:00:01 UTC to 2038-01-19 03:14:07 UTC</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td>0000</td>
+<td>1</td>
+<td>1901 to 2155</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>现在都2020年了，不晓得TIMESTAMP以后咋整，然后TIMESTAMP的特点是有时区特性</p>
+<p>DATE 具体到天，DATETIME/ TIMESTAMP/ TIME 可具体到6位小数点（微秒）</p>
+</blockquote>
+<h4 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h4><table>
+<thead>
+<tr>
+<th>Value</th>
+<th>CHAR(4)</th>
+<th>Storage Required</th>
+<th>VARCHAR(4)</th>
+<th>Storage Required</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘’</td>
+<td>‘    ‘</td>
+<td>4 bytes</td>
+<td>‘’</td>
+<td>1 byte</td>
+</tr>
+<tr>
+<td>‘ab’</td>
+<td>‘ab  ‘</td>
+<td>4 bytes</td>
+<td>‘ab’</td>
+<td>3 bytes</td>
+</tr>
+<tr>
+<td>‘abcd’</td>
+<td>‘abcd’</td>
+<td>4 bytes</td>
+<td>‘abcd’</td>
+<td>5 bytes</td>
+</tr>
+<tr>
+<td>‘abcdefgh’</td>
+<td>‘abcd’</td>
+<td>4 bytes</td>
+<td>‘abcd’</td>
+<td>5 bytes</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>CHAR类型定长会使用空格进行填充</p>
+<p>VARCHAR类型不定长</p>
+<p>其他字符类存储的是二进制</p>
+</blockquote>
+<h4 id="Tip"><a href="#Tip" class="headerlink" title="Tip"></a>Tip</h4><ul>
+<li>开启严格的sql_mode，避免一些非法插入</li>
+<li>字符集选用utf8mb4，utf8是它的子集，扩充了一些移动端的字符</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+
+        
+        努力努力再努力
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/linlinnn">
+            <img src="/img/logo.jpg" alt="linlinnn">
+            linlinnn
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&title=《MySQL 数据类型》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&title=《MySQL 数据类型》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL 数据类型》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">MySQL 索引</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/11/MySQL%20%E5%91%BD%E4%BB%A4/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MySQL命令</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>linlinnn &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&title=《MySQL 数据类型》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&title=《MySQL 数据类型》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL 数据类型》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3aQW7jMBAEwPz/01lgr4m83TOinCxKJ8NyTJYCkHTPfHzE1+ff6+r11d2vn/l6Nx8x/9v6wsPDwxtN/eqaTTEBJ48geaz/mBseHh7eMV6+NCfDv16f80eTbz+X7+Ph4eG9lZcfefNH0z4gPDw8vN/Lm8Hw8PDw/ideMpU8SthHvW04ckPWgoeHhxfz9gWw518/Wt/Dw8PDGy3HeSG/nUS+3NezxcPDwzvAy4tbszasvGmgfacosOHh4eHdymvbm/Ihc2QegtShMx4eHt4xXtvkdNc20LZh5QExHh4e3jne8AxeJqgzTDKTVSCCh4eHt+C1pf3kKLwvsCXfPPwv4eHh4S14+UF5szTnMcfrb0tm8s0vBjw8PLxjvPxQu1m4k5hj3zuGh4eHd5qXLMezpX9zfN+U4vDw8PBO8/ISfhtAzO5uCmx4eHh4z/DagCAvbm2W9Xzjufw8Hh4e3gHerBUgX7hnxa19ewEeHh7ek7y8GXQW7O6P2nnBDA8PD+8cb1PKasPftoFgX2DDw8PDe4a3KW61pa+2daA+TOPh4eEd4M3aBdrNY9hyWgKiMAIPDw/vJt6mhbR9HG2pLI998fDw8J7ktUFDfgSfbTazkCKq7OHh4eGtee0AyVE4aZPKA4X27jcxLh4eHt5NvHx5vauc3zYZtGPh4eHhPcmblefrIKAMPpLo4fL78fDw8A7w8gJSXspqh9+Uu4p8BQ8PD+8m3md57dPRNqRYbUh4eHh4B3j51UYMUVgwOnC3GxUeHh7eCV7eEDC7Zg0Bs6N2vfvh4eHhLXj5Aj1rrsq3nCTOKDYwPDw8vLfyZgfivE2qDRqiB4GHh4f3I3lt2awt/K/aF/Dw8PCO8fZhxGyibftCXUjDw8PDO8Brf+S3Ueym6aotv93QOoCHh4f3aqw/htUW2zFc3SEAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

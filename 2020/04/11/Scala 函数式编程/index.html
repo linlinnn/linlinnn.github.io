@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Scala 函数式编程 | linjunhua&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Scala">
+    <meta name="description" content="Scala 函数式编程遍历 - foreach1foreach(f: (A) ⇒ Unit): Unit     foreach API 说明    参数 f: (A) ⇒ Unit 接收一个函数对象函数的输入参数为集合的元素返回值为空   返回值 Unit 空   12345678&#x2F;&#x2F;匿名函数的输入参数类型可以省略，由编译器自动推断scala&gt; list.foreach(x&#x3D;&gt;pri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scala 函数式编程">
+<meta property="og:url" content="https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="linjunhua&#39;s Blog">
+<meta property="og:description" content="Scala 函数式编程遍历 - foreach1foreach(f: (A) ⇒ Unit): Unit     foreach API 说明    参数 f: (A) ⇒ Unit 接收一个函数对象函数的输入参数为集合的元素返回值为空   返回值 Unit 空   12345678&#x2F;&#x2F;匿名函数的输入参数类型可以省略，由编译器自动推断scala&gt; list.foreach(x&#x3D;&gt;pri">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-11T15:08:26.380Z">
+<meta property="article:modified_time" content="2020-04-11T15:15:03.121Z">
+<meta property="article:author" content="linlinnn">
+<meta property="article:tag" content="Scala">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">linlinnn</h5>
+          <a href="mailto:linjunhuacode@163.com" title="linjunhuacode@163.com" class="mail">linjunhuacode@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Scala 函数式编程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Scala 函数式编程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-11T15:08:26.380Z" itemprop="datePublished" class="page-time">
+  2020-04-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Scala-函数式编程"><span class="post-toc-number">1.</span> <span class="post-toc-text">Scala 函数式编程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#遍历-foreach"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">遍历 - foreach</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#映射-map"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">映射 - map</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#扁平化映射-flatmap"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">扁平化映射 - flatmap</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#过滤-filter"><span class="post-toc-number">1.0.4.</span> <span class="post-toc-text">过滤 - filter</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#排序-sort"><span class="post-toc-number">1.0.5.</span> <span class="post-toc-text">排序 - sort</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#sorted默认排序"><span class="post-toc-number">1.0.5.1.</span> <span class="post-toc-text">sorted默认排序</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#sortBy指定字段排序"><span class="post-toc-number">1.0.5.2.</span> <span class="post-toc-text">sortBy指定字段排序</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#sortWith自定义排序"><span class="post-toc-number">1.0.5.3.</span> <span class="post-toc-text">sortWith自定义排序</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分组-groupBy"><span class="post-toc-number">1.0.6.</span> <span class="post-toc-text">分组 - groupBy</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#聚合-reduce"><span class="post-toc-number">1.0.7.</span> <span class="post-toc-text">聚合 - reduce</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#折叠-fold"><span class="post-toc-number">1.0.8.</span> <span class="post-toc-text">折叠 - fold</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#高阶函数"><span class="post-toc-number">1.0.9.</span> <span class="post-toc-text">高阶函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#函数值作为参数"><span class="post-toc-number">1.0.9.1.</span> <span class="post-toc-text">函数值作为参数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#匿名函数"><span class="post-toc-number">1.0.9.2.</span> <span class="post-toc-text">匿名函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#柯里化"><span class="post-toc-number">1.0.9.3.</span> <span class="post-toc-text">柯里化</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#闭包"><span class="post-toc-number">1.0.9.4.</span> <span class="post-toc-text">闭包</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Scala 函数式编程"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Scala 函数式编程</h1>
+        <div class="post-meta">
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Scala-函数式编程"><a href="#Scala-函数式编程" class="headerlink" title="Scala 函数式编程"></a>Scala 函数式编程</h1><h3 id="遍历-foreach"><a href="#遍历-foreach" class="headerlink" title="遍历 - foreach"></a>遍历 - foreach</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foreach(f: (<span class="type">A</span>) ⇒ <span class="type">Unit</span>): <span class="type">Unit</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>foreach</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数</td>
+<td>f: (A) ⇒ Unit</td>
+<td>接收一个函数对象<br>函数的输入参数为集合的元素<br>返回值为空</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>Unit</td>
+<td>空</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//匿名函数的输入参数类型可以省略，由编译器自动推断</span></span><br><span class="line">scala&gt; list.foreach(x=&gt;println(x))</span><br><span class="line"></span><br><span class="line"><span class="comment">//当函数参数，只在函数体中出现一次，而且函数体没有嵌套调用时，可以使用下划线来简化函数定义</span></span><br><span class="line">scala&gt; list.foreach(println(_))</span><br><span class="line"></span><br><span class="line"><span class="comment">//最简写，直接给定println</span></span><br><span class="line">scala&gt; list.foreach(println)</span><br></pre></td></tr></table></figure>
+
+<h3 id="映射-map"><a href="#映射-map" class="headerlink" title="映射 - map"></a>映射 - map</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">map</span></span>[<span class="type">B</span>](f: (<span class="type">A</span>) ⇒ <span class="type">B</span>): <span class="type">TraversableOnce</span>[<span class="type">B</span>]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>map方法</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>泛型</td>
+<td>[B]</td>
+<td>指定map方法最终返回的集合泛型</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>f: (A) ⇒ B</td>
+<td>传入一个函数对象<br>该函数接收一个类型A（要转换的列表元素）<br>返回值为类型B</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>TraversableOnce[B]</td>
+<td>B类型的集合</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个list集合，实现把内部每一个元素做乘以10，生成一个新的list集合</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> list=<span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">list: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//省略匿名函数参数类型</span></span><br><span class="line">scala&gt; list.map(x=&gt;x*<span class="number">10</span>)</span><br><span class="line">res22: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//最简写用下划线</span></span><br><span class="line">scala&gt; list.map(_*<span class="number">10</span>)</span><br><span class="line">res23: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="扁平化映射-flatmap"><a href="#扁平化映射-flatmap" class="headerlink" title="扁平化映射 - flatmap"></a>扁平化映射 - flatmap</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">flatMap</span></span>[<span class="type">B</span>](f: (<span class="type">A</span>) ⇒ <span class="type">GenTraversableOnce</span>[<span class="type">B</span>]): <span class="type">TraversableOnce</span>[<span class="type">B</span>]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>flatmap方法</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>泛型</td>
+<td>[B]</td>
+<td>最终要转换的集合元素类型</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>f: (A) ⇒ GenTraversableOnce[B]</td>
+<td>传入一个函数对象<br>函数的参数是集合的元素<br>函数的返回值是一个集合</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>TraversableOnce[B]</td>
+<td>B类型的集合</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个List集合,每一个元素中就是一行数据，有很多个单词</span></span><br><span class="line">scala&gt;  <span class="keyword">val</span> list = <span class="type">List</span>(<span class="string">"hadoop hive spark flink"</span>, <span class="string">"hbase spark"</span>)</span><br><span class="line">list: <span class="type">List</span>[<span class="type">String</span>] = <span class="type">List</span>(hadoop hive spark flink, hbase spark)</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用flatMap进行扁平化处理，获取得到所有的单词</span></span><br><span class="line">scala&gt; list.flatMap(x =&gt; x.split(<span class="string">" "</span>))</span><br><span class="line">res24: <span class="type">List</span>[<span class="type">String</span>] = <span class="type">List</span>(hadoop, hive, spark, flink, hbase, spark)</span><br><span class="line"></span><br><span class="line"><span class="comment">//简写</span></span><br><span class="line">scala&gt; list.flatMap(_.split(<span class="string">" "</span>))</span><br><span class="line">res25: <span class="type">List</span>[<span class="type">String</span>] = <span class="type">List</span>(hadoop, hive, spark, flink, hbase, spark)</span><br><span class="line"></span><br><span class="line"><span class="comment">//flatMap该方法其本质是先进行了map 然后又调用了flatten</span></span><br><span class="line">scala&gt; list.map(_.split(<span class="string">" "</span>)).flatten</span><br><span class="line">res26: <span class="type">List</span>[<span class="type">String</span>] = <span class="type">List</span>(hadoop, hive, spark, flink, hbase, spark)</span><br></pre></td></tr></table></figure>
+
+<h3 id="过滤-filter"><a href="#过滤-filter" class="headerlink" title="过滤 - filter"></a>过滤 - filter</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filter</span></span>(p: (<span class="type">A</span>) ⇒ <span class="type">Boolean</span>): <span class="type">TraversableOnce</span>[<span class="type">A</span>]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>filter方法</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数</td>
+<td>p: (A) ⇒ Boolean</td>
+<td>传入一个函数对象<br>接收一个集合类型的参数<br>返回布尔类型，满足条件返回true, 不满足返回false</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>TraversableOnce[A]</td>
+<td>列表</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个list集合</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> list = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>)</span><br><span class="line">list: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//过滤出集合中大于5的元素</span></span><br><span class="line">scala&gt; list.filter(x =&gt; x&gt;<span class="number">5</span>)</span><br><span class="line">res27: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//把集合中大于5的元素取出来乘以10生成一个新的list集合</span></span><br><span class="line">scala&gt; list.filter(_ &gt; <span class="number">5</span>).map(_ * <span class="number">10</span>)</span><br><span class="line">res29: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">60</span>, <span class="number">70</span>, <span class="number">80</span>, <span class="number">90</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="排序-sort"><a href="#排序-sort" class="headerlink" title="排序 - sort"></a>排序 - sort</h3><p>在scala集合中，可以使用以下几种方式来进行排序</p>
+<ul>
+<li>sorted默认排序 </li>
+<li>sortBy指定字段排序 </li>
+<li>sortWith自定义排序</li>
+</ul>
+<h4 id="sorted默认排序"><a href="#sorted默认排序" class="headerlink" title="sorted默认排序"></a>sorted默认排序</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个List集合</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> list=<span class="type">List</span>(<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">3</span>)</span><br><span class="line">list: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">5</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//默认就是升序</span></span><br><span class="line">scala&gt; list.sorted</span><br><span class="line">res30: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="sortBy指定字段排序"><a href="#sortBy指定字段排序" class="headerlink" title="sortBy指定字段排序"></a>sortBy指定字段排序</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sortBy</span></span>[<span class="type">B</span>](f: (<span class="type">A</span>) ⇒ <span class="type">B</span>): <span class="type">List</span>[<span class="type">A</span>]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>sortBy方法</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>泛型</td>
+<td>[B]</td>
+<td>按照什么类型来进行排序</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>f: (A) ⇒ B</td>
+<td>传入函数对象<br>接收一个集合类型的元素参数<br>返回B类型的元素进行排序</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>List[A]</td>
+<td>返回排序后的列表</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个List集合</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> list=<span class="type">List</span>(<span class="string">"1 hadoop"</span>,<span class="string">"2 spark"</span>,<span class="string">"3 flink"</span>)</span><br><span class="line">list: <span class="type">List</span>[<span class="type">String</span>] = <span class="type">List</span>(<span class="number">1</span> hadoop, <span class="number">2</span> spark, <span class="number">3</span> flink)</span><br><span class="line"></span><br><span class="line"><span class="comment">//按照单词的首字母进行排序</span></span><br><span class="line">scala&gt; list.sortBy(x=&gt;x.split(<span class="string">" "</span>)(<span class="number">1</span>))</span><br><span class="line">res33: <span class="type">List</span>[<span class="type">String</span>] = <span class="type">List</span>(<span class="number">3</span> flink, <span class="number">1</span> hadoop, <span class="number">2</span> spark)</span><br></pre></td></tr></table></figure>
+
+<h4 id="sortWith自定义排序"><a href="#sortWith自定义排序" class="headerlink" title="sortWith自定义排序"></a>sortWith自定义排序</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sortWith</span></span>(lt: (<span class="type">A</span>, <span class="type">A</span>) ⇒ <span class="type">Boolean</span>): <span class="type">List</span>[<span class="type">A</span>]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>sortWith方法</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数</td>
+<td>lt: (A, A) ⇒ Boolean</td>
+<td>传入一个比较大小的函数对象<br>接收两个集合类型的元素参数<br>返回两个元素大小，小于返回true，大于返回false</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>List[A]</td>
+<td>返回排序后的列表</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> list = <span class="type">List</span>(<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line">a: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//降序</span></span><br><span class="line">scala&gt; list.sortWith((x,y)=&gt;x&gt;y)</span><br><span class="line">res35: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//升序</span></span><br><span class="line">scala&gt; list.sortWith((x,y)=&gt;x&lt;y)</span><br><span class="line">res36: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="分组-groupBy"><a href="#分组-groupBy" class="headerlink" title="分组 - groupBy"></a>分组 - groupBy</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">groupBy</span></span>[<span class="type">K</span>](f: (<span class="type">A</span>) ⇒ <span class="type">K</span>): <span class="type">Map</span>[<span class="type">K</span>, <span class="type">List</span>[<span class="type">A</span>]]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>groupBy方法</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>泛型</td>
+<td>[K]</td>
+<td>分组字段的类型</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>f: (A) ⇒ K</td>
+<td>传入一个函数对象<br>接收集合元素类型的参数<br>返回一个K类型的key，这个key会用来进行分组，相同的key放在一组中</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>Map[K, List[A]]</td>
+<td>返回一个映射，K为分组字段，List为这个分组字段对应的一组数据</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> a = <span class="type">List</span>(<span class="string">"张三"</span>-&gt;<span class="string">"男"</span>, <span class="string">"李四"</span>-&gt;<span class="string">"女"</span>, <span class="string">"王五"</span>-&gt;<span class="string">"男"</span>)</span><br><span class="line">a: <span class="type">List</span>[(<span class="type">String</span>, <span class="type">String</span>)] = <span class="type">List</span>((张三,男), (李四,女), (王五,男))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 按照性别分组</span></span><br><span class="line">scala&gt; a.groupBy(_._2)</span><br><span class="line">res0: scala.collection.immutable.<span class="type">Map</span>[<span class="type">String</span>,<span class="type">List</span>[(<span class="type">String</span>, <span class="type">String</span>)]] = <span class="type">Map</span>(男 -&gt; <span class="type">List</span>((张三,男), (王五,男)),</span><br><span class="line">女 -&gt; <span class="type">List</span>((李四,女)))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将分组后的映射转换为性别/人数元组列表</span></span><br><span class="line">scala&gt; res0.map(x =&gt; x._1 -&gt; x._2.size)</span><br><span class="line">res3: scala.collection.immutable.<span class="type">Map</span>[<span class="type">String</span>,<span class="type">Int</span>] = <span class="type">Map</span>(男 -&gt; <span class="number">2</span>, 女 -&gt; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="聚合-reduce"><a href="#聚合-reduce" class="headerlink" title="聚合 - reduce"></a>聚合 - reduce</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reduce</span></span>[<span class="type">A1</span> &gt;: <span class="type">A</span>](op: (<span class="type">A1</span>, <span class="type">A1</span>) ⇒ <span class="type">A1</span>): <span class="type">A1</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>reduce方法</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>泛型</td>
+<td>[A1 &gt;: A]</td>
+<td>（下界）A1必须是集合元素类型的子类</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>op: (A1, A1) ⇒ A1</td>
+<td>传入函数对象，用来不断进行聚合操作<br>第一个A1类型参数为：当前聚合后的变量<br>第二个A1类型参数为：当前要进行聚合的元素</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>A1</td>
+<td>列表最终聚合为一个元素</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> a = <span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>)</span><br><span class="line">a: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">scala&gt; a.reduce((x,y) =&gt; x + y)</span><br><span class="line">res5: <span class="type">Int</span> = <span class="number">55</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一个下划线表示第一个参数，就是历史的聚合数据结果</span></span><br><span class="line"><span class="comment">// 第二个下划线表示第二个参数，就是当前要聚合的数据元素</span></span><br><span class="line">scala&gt; a.reduce(_ + _)</span><br><span class="line">res53: <span class="type">Int</span> = <span class="number">55</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 与reduce一样，从左往右计算</span></span><br><span class="line">scala&gt; a.reduceLeft(_ + _)</span><br><span class="line">res0: <span class="type">Int</span> = <span class="number">55</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从右往左聚合计算</span></span><br><span class="line">scala&gt; a.reduceRight(_ + _)</span><br><span class="line">res1: <span class="type">Int</span> = <span class="number">55</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="折叠-fold"><a href="#折叠-fold" class="headerlink" title="折叠 - fold"></a>折叠 - fold</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fold</span></span>[<span class="type">A1</span> &gt;: <span class="type">A</span>](z: <span class="type">A1</span>)(op: (<span class="type">A1</span>, <span class="type">A1</span>) ⇒ <span class="type">A1</span>): <span class="type">A1</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>reduce方法</th>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>泛型</td>
+<td>[A1 &gt;: A]</td>
+<td>（下界）A1必须是集合元素类型的子类</td>
+</tr>
+<tr>
+<td>参数1</td>
+<td>z: A1</td>
+<td>初始值</td>
+</tr>
+<tr>
+<td>参数2</td>
+<td>op: (A1, A1) ⇒ A1</td>
+<td>传入函数对象，用来不断进行折叠操作<br>第一个A1类型参数为：当前折叠后的变量<br>第二个A1类型参数为：当前要进行折叠的元素</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>A1</td>
+<td>列表最终折叠为一个元素</td>
+</tr>
+</tbody></table>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个List集合</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> a = <span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>)</span><br><span class="line">a: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//求和</span></span><br><span class="line">scala&gt; a.sum</span><br><span class="line">res41: <span class="type">Int</span> = <span class="number">55</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//给定一个初始值，，折叠求和</span></span><br><span class="line">scala&gt; a.fold(<span class="number">0</span>)(_+_)</span><br><span class="line">res42: <span class="type">Int</span> = <span class="number">55</span></span><br><span class="line"></span><br><span class="line">scala&gt; a.fold(<span class="number">10</span>)(_+_)</span><br><span class="line">res43: <span class="type">Int</span> = <span class="number">65</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//从左往右</span></span><br><span class="line">scala&gt; a.foldLeft(<span class="number">10</span>)(_+_)</span><br><span class="line">res44: <span class="type">Int</span> = <span class="number">65</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//从右往左</span></span><br><span class="line">scala&gt; a.foldRight(<span class="number">10</span>)(_+_)</span><br><span class="line">res45: <span class="type">Int</span> = <span class="number">65</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><p>使用函数值作为参数，或者返回值为函数值的“函数”和“方法”，均称之为“高阶函数”</p>
+<h4 id="函数值作为参数"><a href="#函数值作为参数" class="headerlink" title="函数值作为参数"></a>函数值作为参数</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个数组</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> array=<span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line">array: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个函数</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> func=(x:<span class="type">Int</span>)=&gt;x*<span class="number">10</span></span><br><span class="line">func: <span class="type">Int</span> =&gt; <span class="type">Int</span> = &lt;function1&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//函数作为参数传递到方法中</span></span><br><span class="line">scala&gt; array.map(func)</span><br><span class="line">res0: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个数组</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> array = <span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">array: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个没有名称的函数----匿名函数</span></span><br><span class="line">scala&gt; array.map(x=&gt;x*<span class="number">10</span>)</span><br><span class="line">res1: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h4><p>方法可以定义多个参数列表，当使用较少的参数列表调用多参数列表的方法时，会产生一个新的函数，该函数接收剩余的参数列表作为其参数。这被称为<strong>柯里化</strong>。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getAddress</span></span>(a:<span class="type">String</span>):(<span class="type">String</span>,<span class="type">String</span>)=&gt;<span class="type">String</span>=&#123;</span><br><span class="line">    (b:<span class="type">String</span>,c:<span class="type">String</span>)=&gt;a+<span class="string">"-"</span>+b+<span class="string">"-"</span>+c</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> f1 = getAddress(<span class="string">"china"</span>)</span><br><span class="line">f1: (<span class="type">String</span>, <span class="type">String</span>) =&gt; <span class="type">String</span> = &lt;function2&gt;</span><br><span class="line"></span><br><span class="line">scala&gt; f1(<span class="string">"beijing"</span>,<span class="string">"tiananmen"</span>)</span><br><span class="line">res5: <span class="type">String</span> = china-beijing-tiananmen</span><br><span class="line"></span><br><span class="line"><span class="comment">//这里就可以这样去定义方法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getAddress</span></span>(a:<span class="type">String</span>)(b:<span class="type">String</span>,c:<span class="type">String</span>):<span class="type">String</span>=&#123; </span><br><span class="line">  	a+<span class="string">"-"</span>+b+<span class="string">"-"</span>+c </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//调用</span></span><br><span class="line">scala&gt; getAddress(<span class="string">"china"</span>)(<span class="string">"beijing"</span>,<span class="string">"tiananmen"</span>)</span><br><span class="line">res0: <span class="type">String</span> = china-beijing-tiananmen</span><br><span class="line"></span><br><span class="line"><span class="comment">//之前使用的下面这些操作就是使用到了柯里化</span></span><br><span class="line"><span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>).fold(<span class="number">0</span>)(_+_)</span><br><span class="line"><span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>).foldLeft(<span class="number">0</span>)(_+_)</span><br><span class="line"><span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>).foldRight(<span class="number">0</span>)(_+_)</span><br></pre></td></tr></table></figure>
+
+<h4 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h4><p>函数里面引用外面类成员变量叫作闭包</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> factor=<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> f1=(x:<span class="type">Int</span>) =&gt; x*factor</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>定义的函数f1，它的返回值是依赖于不在函数作用域的一个变量</p>
+<p>后期必须要要获取到这个变量才能执行</p>
+<p>spark和flink程序的开发中大量的使用到函数，函数的返回值依赖的变量可能都需要进行大量的网络传</p>
+<p>输获取得到，这里就需要这些变量实现序列化进行网络传输。</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+
+        
+        努力努力再努力
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/linlinnn">
+            <img src="/img/logo.jpg" alt="linlinnn">
+            linlinnn
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/" rel="tag">Scala</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/&title=《Scala 函数式编程》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/&title=《Scala 函数式编程》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Scala 函数式编程》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/04/11/Scala%20%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Scala 面对对象编程</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MySQL 索引</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>linlinnn &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/&title=《Scala 函数式编程》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/&title=《Scala 函数式编程》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Scala 函数式编程》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJklEQVR42u3aQY7jQAgF0Nz/0pn1aGL7A84oRs+rViepqkekpoF6veLnHT//fupoteq+1VdveLCxsbEfwk4YyQZHnzpf4TxwR8FKdrlYGRsbG3sdu7dNcsReojpPh9WzYWNjY2MnxUD+niTlnJ/wfDVsbGxs7Oq/+9XUVQ1TgsfGxsbGTtJMj11tBlVT5td7adjY2Ng/z86bPr//81fm29jY2Ng/zH4Xn/NA9BJe7yR50vrwKWxsbOxF7F4bqHqgvITotbSabSxsbGzsRexqg7563PPN8iHuXWUSNjY29ib2veXEvLSojgfOg3u4JjY2NvZSdpKE7moP5YPbpJyongcbGxt7E/uuS5PV0BQaPcWz5dc0sbGxsbeyC//Q/5dh7bzJdRE+bGxs7Iez8wZNjqymtOQ3SVGRv4qNjY29lT059KREmYwoeu/HxsbG3s1OUtf8yma+fi8RlhMYNjY29sPZ1auTScq5rWyIr2kWxg/Y2NjYi9jJn/5JQkpKhe8F6yJw2NjY2IvYkws6k7b+fJ3JatjY2Ng72PMUUj3KOak6bE4S2IfVsLGxsZeyJ9tPWlE9Xl44RS9gY2NjP5ZdbcfkvJtb+a10G6UxbGxs7IezJy31XoyrAe1RL96PjY2NvYidj1GTMiAZ6+bhSHbJC6eLagwbGxv74ez8QNX39JpE82FD83vGxsbGfiw7T2Pn1N7wYD4wzttYzeyNjY2N/cPs3mbVKmcSlOqXETW/sLGxsdex59v3yoPe8GCSUP9KYNjY2Ngr2JPyo1dI9Aa91Qs6UXsLGxsbezW715eqjm+roamWPRefwsbGxl7HnlyL6V3H6V30qbIP0xg2Njb2UnbepukVFb0wVUcCNwwJsLGxsR/Cfhef1/jpJctqY+siQNjY2NiL2L0E0Bsn5O2qKOsWd2x+edjY2NgPYefD2rxBP08n5yGrFjzNbxIbGxv7Ueze0LSaPJLDVccPeeCwsbGxsSeppRrKedlzkVCxsbGxsecbB82mPGVWixlsbGzsfey8YLgrTNVW1GQ88GF3bGxs7EXsu5r11SQ0HxVUw4GNjY29jv0HLvmH82E9ltYAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

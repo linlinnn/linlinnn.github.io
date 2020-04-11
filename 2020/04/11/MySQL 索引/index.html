@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MySQL 索引 | linjunhua&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="MySQL">
+    <meta name="description" content="MySQL 索引索引的基本评估思路B+树 页大小：16KB 如何计算对应树的高度，表能存放的记录数 12show table status like &#39;table_a&#39;;# 参考对应的avg_row_length  现在假设主键为10个字节，每条记录平均500字节 聚簇索引，记录存放在叶子节点    树的高度 记录数    1 32   2 1000 * 32 &#x3D; 32000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 索引">
+<meta property="og:url" content="https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/index.html">
+<meta property="og:site_name" content="linjunhua&#39;s Blog">
+<meta property="og:description" content="MySQL 索引索引的基本评估思路B+树 页大小：16KB 如何计算对应树的高度，表能存放的记录数 12show table status like &#39;table_a&#39;;# 参考对应的avg_row_length  现在假设主键为10个字节，每条记录平均500字节 聚簇索引，记录存放在叶子节点    树的高度 记录数    1 32   2 1000 * 32 &#x3D; 32000">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-11T15:08:26.369Z">
+<meta property="article:modified_time" content="2020-04-11T15:12:02.184Z">
+<meta property="article:author" content="linlinnn">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">linlinnn</h5>
+          <a href="mailto:linjunhuacode@163.com" title="linjunhuacode@163.com" class="mail">linjunhuacode@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MySQL 索引</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MySQL 索引</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-11T15:08:26.369Z" itemprop="datePublished" class="page-time">
+  2020-04-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MySQL-索引"><span class="post-toc-number">1.</span> <span class="post-toc-text">MySQL 索引</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#索引的基本评估思路"><span class="post-toc-number">1.0.0.1.</span> <span class="post-toc-text">索引的基本评估思路</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查看索引信息"><span class="post-toc-number">1.0.0.2.</span> <span class="post-toc-text">查看索引信息</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#复合索引"><span class="post-toc-number">1.0.0.3.</span> <span class="post-toc-text">复合索引</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-MySQL 索引"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MySQL 索引</h1>
+        <div class="post-meta">
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="MySQL-索引"><a href="#MySQL-索引" class="headerlink" title="MySQL 索引"></a>MySQL 索引</h1><h4 id="索引的基本评估思路"><a href="#索引的基本评估思路" class="headerlink" title="索引的基本评估思路"></a>索引的基本评估思路</h4><p>B+树</p>
+<p>页大小：16KB</p>
+<p>如何计算对应树的高度，表能存放的记录数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">show table status like &#39;table_a&#39;;</span><br><span class="line"># 参考对应的avg_row_length</span><br></pre></td></tr></table></figure>
+
+<p>现在假设主键为10个字节，每条记录平均500字节</p>
+<p>聚簇索引，记录存放在叶子节点</p>
+<table>
+<thead>
+<tr>
+<th>树的高度</th>
+<th>记录数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>32</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1000 * 32 = 32000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1000^2 * 32 = 32000000</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>MySQL 数据量级为千万级别的时候，一般能有比较不错的查询性能</p>
+<p>当然这是理论值，因为会有碎片的存在，可以乘以70%作为合理预估</p>
+</blockquote>
+<p>IOPS = 1000ms / (寻道时间 + 旋转延迟)</p>
+<p>磁盘的IOPS大约为100，所以一个树高为3的查询时间可预估为3 / 100 = 0.03 s</p>
+<h4 id="查看索引信息"><a href="#查看索引信息" class="headerlink" title="查看索引信息"></a>查看索引信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show index from table_a</span><br></pre></td></tr></table></figure>
+
+<p><code>Cardinality</code> 是一个比较重要的指标，表示不重复值的个数（采样预估，具体采样页数可以控制），这个值越大越好，用来衡量索引区分数据的能力</p>
+<p>如果是复合索引，则后面的Cardinality表示的是和前面的sequence的列组合起来的区分度</p>
+<p>即seq为1，表示一个列的区分度，seq为2，表示1和2列组合起来的区分度</p>
+<blockquote>
+<p>思考：索引应该创建在区分度比较高的列，那么类别需不需要加索引？</p>
+<p>一般而言，类别的种类不会很多，所以区分度并不高，那么为了支持类别的查询，可以考虑使用分区的方式</p>
+</blockquote>
+<h4 id="复合索引"><a href="#复合索引" class="headerlink" title="复合索引"></a>复合索引</h4><p>由多个列组成的索引，最重要的就是最左前缀原则</p>
+<p>索引能进行快速定位数据的原理是，对组成索引的列进行了排序</p>
+<p>假设table_a有复合索引(a, b)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 可以使用索引</span><br><span class="line">select * from table_a where a &#x3D; ?</span><br><span class="line"># 可以使用索引</span><br><span class="line">select * from table_a where a &#x3D; ? and b &#x3D; ?</span><br><span class="line"># 不可以使用索引</span><br><span class="line">select * from table_a where b &#x3D; ?</span><br><span class="line"># 不可以使用索引</span><br><span class="line">select * from table_a where a &#x3D; ? or b &#x3D; ?</span><br><span class="line"># 先使用索引a得到一部分数据，再用b &#x3D; ?进行过滤</span><br><span class="line">select * from table_a where a &gt; ? and b &#x3D; ?</span><br><span class="line"># 可以使用覆盖索引</span><br><span class="line">select count(1) from table_a where b &gt; ? and b &lt; ?</span><br></pre></td></tr></table></figure>
+
+<p>假设table_a有复合索引(a, b, c)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 先使用索引a得到一部分数据，再用c &#x3D; ?进行过滤</span><br><span class="line">select * from table_a where a &#x3D; ? and c &#x3D; ?</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+
+        
+        努力努力再努力
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/linlinnn">
+            <img src="/img/logo.jpg" alt="linlinnn">
+            linlinnn
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/&title=《MySQL 索引》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/&title=《MySQL 索引》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL 索引》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/04/11/Scala%20%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Scala 函数式编程</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/11/MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MySQL 数据类型</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>linlinnn &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/&title=《MySQL 索引》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/&title=《MySQL 索引》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL 索引》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/11/MySQL%20%E7%B4%A2%E5%BC%95/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvklEQVR42u3aQW4bMRAEQP3/0w7gU4BEUvcMaflQewoCapdFA+Sgh49H/Hx9P/mYf8e3//P115PPYfjg4eHhjab+7Hk99de/ymHJMiXf/c+b8fDw8K7xNp9J9uT2i6/fU7wBDw8P76O8p5tvUBDPJtouKx4eHt5v47WxQr4os1IeDw8P77O85DNJNDCbensYXMla8PDw8GJe2wD7Df++2N/Dw8PDW3TV8+bWZvy+TH/6XTw8PLwLvNcFcd7WOlv45gsUHRh4eHh4F3h5m/9UoJAEGXnjrQ5z8fDw8Ba8tk01uzLVFs35+DdLgIeHh3eBl0+rHZNs4smlrrYt95itOh4eHt6Clxe4p2KLfNLDq114eHh4R3mzjbgtf2cj27/Sm/4eHh4e3iFeXl6fLXnbltipQAQPDw9vz2tb/nk4m5TOm60/inrx8PDwLvA258ks/L1xQeHNUYSHh4d3jdcGEPnmnm/6s9AWDw8P7yd5wzB0FN3mra99LPJozxM8PDy80Q2lzYbehgj7A6kNO/Dw8PBu8Npm2NmjpdjiRxEwHh4e3ile2+Z/lE/brNqHvG/yaTw8PLyjvLb8bZF5gLuJP/Dw8PB+htdeAsjjgzaGyEOQaAnw8PDwrvFmRfCsQdUuYnuNYNijw8PDwyuj23xTbsOLWRndFvRvvoiHh4d3gZdv6/lGn5fjs+UYhst4eHh4h3iz6DYvuHPkrCgfhrl4eHh4a14eMZy6CnCqMba6v4CHh4c3grVlbt702vwqP6jeXLrCw8PDO8qbHR6zJlYbVSSLsr8QhoeHhzfjtYdBHkkkkessui0iZjw8PLxrvDykODX+1AkWHQx4eHh4H+XtU9P2nZvjBA8PD++zvKQB1kax7cFQ/woPDw/vGq/98KxVtsfXjS48PDy8C7xNA2w2lXzrT95z4KoWHh4eXsr7A8yIK/DoA7RUAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

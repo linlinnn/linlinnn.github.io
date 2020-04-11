@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Scala 数据类型 | linjunhua&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Scala">
+    <meta name="description" content="Scala 数据类型方法和函数方法和函数的区别 方法是隶属于类或者对象的，在运行时，它是加载到JVM的方法区中 可以将函数对象赋值给一个变量，在运行时，它是加载到JVM的堆内存中 函数是一个对象，继承自FunctionN，函数对象有apply，curried，toString，tupled这些方法，而方法则没有   最多是Function22 即最多只能有22个参数  方法转换为函数 有时候需要将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scala 数据类型">
+<meta property="og:url" content="https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="linjunhua&#39;s Blog">
+<meta property="og:description" content="Scala 数据类型方法和函数方法和函数的区别 方法是隶属于类或者对象的，在运行时，它是加载到JVM的方法区中 可以将函数对象赋值给一个变量，在运行时，它是加载到JVM的堆内存中 函数是一个对象，继承自FunctionN，函数对象有apply，curried，toString，tupled这些方法，而方法则没有   最多是Function22 即最多只能有22个参数  方法转换为函数 有时候需要将">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-11T15:08:26.415Z">
+<meta property="article:modified_time" content="2020-04-11T15:12:34.708Z">
+<meta property="article:author" content="linlinnn">
+<meta property="article:tag" content="Scala">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">linlinnn</h5>
+          <a href="mailto:linjunhuacode@163.com" title="linjunhuacode@163.com" class="mail">linjunhuacode@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Scala 数据类型</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Scala 数据类型</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-11T15:08:26.415Z" itemprop="datePublished" class="page-time">
+  2020-04-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Scala-数据类型"><span class="post-toc-number">1.</span> <span class="post-toc-text">Scala 数据类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方法和函数"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">方法和函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方法和函数的区别"><span class="post-toc-number">1.0.1.1.</span> <span class="post-toc-text">方法和函数的区别</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方法转换为函数"><span class="post-toc-number">1.0.1.2.</span> <span class="post-toc-text">方法转换为函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数组"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">数组</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#定长数组"><span class="post-toc-number">1.0.2.1.</span> <span class="post-toc-text">定长数组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#变长数组"><span class="post-toc-number">1.0.2.2.</span> <span class="post-toc-text">变长数组</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#变长数组的增删改操作"><span class="post-toc-number">1.0.2.2.1.</span> <span class="post-toc-text">变长数组的增删改操作</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#遍历数组"><span class="post-toc-number">1.0.2.2.2.</span> <span class="post-toc-text">遍历数组</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数组常用操作"><span class="post-toc-number">1.0.2.3.</span> <span class="post-toc-text">数组常用操作</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#元组"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">元组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#映射Map"><span class="post-toc-number">1.0.4.</span> <span class="post-toc-text">映射Map</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#不可变Map"><span class="post-toc-number">1.0.4.1.</span> <span class="post-toc-text">不可变Map</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#可变Map"><span class="post-toc-number">1.0.4.2.</span> <span class="post-toc-text">可变Map</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Map基本操作"><span class="post-toc-number">1.0.4.3.</span> <span class="post-toc-text">Map基本操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#遍历map"><span class="post-toc-number">1.0.4.3.1.</span> <span class="post-toc-text">遍历map</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Set集合"><span class="post-toc-number">1.0.5.</span> <span class="post-toc-text">Set集合</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#不可变Set集合"><span class="post-toc-number">1.0.5.1.</span> <span class="post-toc-text">不可变Set集合</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#可变Set集合"><span class="post-toc-number">1.0.5.2.</span> <span class="post-toc-text">可变Set集合</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#列表-List"><span class="post-toc-number">1.0.6.</span> <span class="post-toc-text">列表 List</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#不可变列表"><span class="post-toc-number">1.0.6.1.</span> <span class="post-toc-text">不可变列表</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#可变列表"><span class="post-toc-number">1.0.6.2.</span> <span class="post-toc-text">可变列表</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#列表操作"><span class="post-toc-number">1.0.6.3.</span> <span class="post-toc-text">列表操作</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Scala 数据类型"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Scala 数据类型</h1>
+        <div class="post-meta">
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Scala-数据类型"><a href="#Scala-数据类型" class="headerlink" title="Scala 数据类型"></a>Scala 数据类型</h1><h3 id="方法和函数"><a href="#方法和函数" class="headerlink" title="方法和函数"></a>方法和函数</h3><h4 id="方法和函数的区别"><a href="#方法和函数的区别" class="headerlink" title="方法和函数的区别"></a>方法和函数的区别</h4><ul>
+<li>方法是隶属于类或者对象的，在运行时，它是加载到JVM的方法区中</li>
+<li>可以将函数对象赋值给一个变量，在运行时，它是加载到JVM的堆内存中</li>
+<li><strong>函数是一个对象，继承自FunctionN</strong>，函数对象有<code>apply</code>，<code>curried</code>，<code>toString</code>，<code>tupled</code>这些方法，而方法则没有</li>
+</ul>
+<blockquote>
+<p>最多是Function22 即最多只能有22个参数</p>
+</blockquote>
+<h4 id="方法转换为函数"><a href="#方法转换为函数" class="headerlink" title="方法转换为函数"></a>方法转换为函数</h4><ul>
+<li>有时候需要将方法转换为函数，作为变量传递，就需要将方法转换为函数</li>
+<li>使用<code>_</code>即可将方法转换为函数</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(x:<span class="type">Int</span>,y:<span class="type">Int</span>)=x+y</span><br><span class="line">add: (x: <span class="type">Int</span>, y: <span class="type">Int</span>)<span class="type">Int</span></span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> a = add _</span><br><span class="line">a: (<span class="type">Int</span>, <span class="type">Int</span>) =&gt; <span class="type">Int</span> = &lt;function2&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><h4 id="定长数组"><a href="#定长数组" class="headerlink" title="定长数组"></a>定长数组</h4><ul>
+<li>定长数组指的是数组的<strong>长度</strong>是<strong>不允许改变</strong>的</li>
+<li>数组的<strong>元素</strong>是<strong>可以改变</strong>的</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过指定长度定义数组</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 变量名 = <span class="keyword">new</span> <span class="type">Array</span>[元素类型](数组长度)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用元素直接初始化数组</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 变量名 = <span class="type">Array</span>(元素<span class="number">1</span>, 元素<span class="number">2</span>, 元素<span class="number">3.</span>..)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在scala中，数组的泛型使用[]来指定<br>使用()来获取元素</p>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> a=<span class="keyword">new</span> <span class="type">Array</span>[<span class="type">Int</span>](<span class="number">10</span>)</span><br><span class="line">a: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">scala&gt; a(<span class="number">0</span>)</span><br><span class="line">res19: <span class="type">Int</span> = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">scala&gt; a(<span class="number">0</span>)=<span class="number">10</span></span><br><span class="line"></span><br><span class="line">scala&gt; a</span><br><span class="line">res21: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//////////////////////////////////////////////////////////////////</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> b = <span class="type">Array</span>(<span class="string">"hadoop"</span>,<span class="string">"spark"</span>,<span class="string">"hive"</span>)</span><br><span class="line">b: <span class="type">Array</span>[<span class="type">String</span>] = <span class="type">Array</span>(hadoop, spark, hive)</span><br><span class="line"></span><br><span class="line">scala&gt; b(<span class="number">0</span>)</span><br><span class="line">res24: <span class="type">String</span> = hadoop</span><br><span class="line"></span><br><span class="line">scala&gt; b.length</span><br><span class="line">res25: <span class="type">Int</span> = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="变长数组"><a href="#变长数组" class="headerlink" title="变长数组"></a>变长数组</h4><ul>
+<li>变长数组指的是数组的长度是可变的，可以往数组中添加、删除元素</li>
+<li>创建变长数组，需要提前导入ArrayBuffer类</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.collection.mutable.<span class="type">ArrayBuffer</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建空的ArrayBuffer变长数组</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> a = <span class="type">ArrayBuffer</span>[元素类型]()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建带有初始元素的ArrayBuffer	</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> a = <span class="type">ArrayBuffer</span>(元素<span class="number">1</span>，元素<span class="number">2</span>，元素<span class="number">3.</span>...)</span><br></pre></td></tr></table></figure>
+
+<h5 id="变长数组的增删改操作"><a href="#变长数组的增删改操作" class="headerlink" title="变长数组的增删改操作"></a>变长数组的增删改操作</h5><ul>
+<li>使用<code>+=</code>添加元素</li>
+<li>使用<code>-=</code>删除元素</li>
+<li>使用<code>++=</code>追加一个数组到变长数组</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义变长数组</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> a = <span class="type">ArrayBuffer</span>(<span class="string">"hadoop"</span>, <span class="string">"spark"</span>, <span class="string">"flink"</span>)</span><br><span class="line">a: scala.collection.mutable.<span class="type">ArrayBuffer</span>[<span class="type">String</span>] = <span class="type">ArrayBuffer</span>(hadoop, spark, flink)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 追加一个元素</span></span><br><span class="line">scala&gt; a += <span class="string">"flume"</span></span><br><span class="line">res10: a<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ArrayBuffer</span>(hadoop, spark, flink, flume)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除一个元素</span></span><br><span class="line">scala&gt; a -= <span class="string">"hadoop"</span></span><br><span class="line">res11: a<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ArrayBuffer</span>(spark, flink, flume)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 追加一个数组</span></span><br><span class="line">scala&gt; a ++= <span class="type">Array</span>(<span class="string">"hive"</span>, <span class="string">"sqoop"</span>)</span><br><span class="line">res12: a<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ArrayBuffer</span>(spark, flink, flume, hive, sqoop)</span><br></pre></td></tr></table></figure>
+
+<h5 id="遍历数组"><a href="#遍历数组" class="headerlink" title="遍历数组"></a>遍历数组</h5><p>可以使用以下两种方式来遍历数组：</p>
+<ul>
+<li>使用 <strong>for表达式</strong> 直接遍历数组中的元素</li>
+<li>使用 <strong>索引</strong> 遍历数组中的元素</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">for</span>(i &lt;- a) println(i)</span><br><span class="line">hadoop</span><br><span class="line">hive</span><br><span class="line">flume</span><br><span class="line">spark</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">for</span>(i &lt;- <span class="number">0</span> to a.length <span class="number">-1</span> ) println(a(i))</span><br><span class="line">hadoop</span><br><span class="line">hive</span><br><span class="line">flume</span><br><span class="line">spark</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">for</span>(i &lt;- <span class="number">0</span> until a.length) println(a(i))</span><br><span class="line">hadoop</span><br><span class="line">hive</span><br><span class="line">flume</span><br><span class="line">spark</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>0 to n =&gt; [0, n]</p>
+<p>0 until n =&gt; [0. n)</p>
+</blockquote>
+<h4 id="数组常用操作"><a href="#数组常用操作" class="headerlink" title="数组常用操作"></a>数组常用操作</h4><p>scala中的数组封装了丰富的计算操作，将来在对数据处理的时候，不需要我们自己再重新实现。</p>
+<ul>
+<li>求和——sum方法</li>
+<li>求最大值——max方法 </li>
+<li>求最小值——min方法 </li>
+<li>排序——sorted方法</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> array = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">5</span>)</span><br><span class="line">array: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//求和</span></span><br><span class="line">scala&gt; array.sum</span><br><span class="line">res10: <span class="type">Int</span> = <span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//求最大值</span></span><br><span class="line">scala&gt; array.max</span><br><span class="line">res11: <span class="type">Int</span> = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//求最小值</span></span><br><span class="line">scala&gt; array.min</span><br><span class="line">res12: <span class="type">Int</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//升序</span></span><br><span class="line">scala&gt; array.sorted</span><br><span class="line">res13: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//降序 reverse 反转</span></span><br><span class="line">scala&gt; array.sorted.reverse</span><br><span class="line">res14: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><p>元组可以用来包含一组不同类型的值。例如：姓名，年龄，性别，出生年月</p>
+<p>元组的元素是不可变的</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用括号来定义元组</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 元组变量名称 = (元素<span class="number">1</span>, 元素<span class="number">2</span>, 元素<span class="number">3.</span>...)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用箭头来定义元素（元组只有两个元素）</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 元组 = 元素<span class="number">1</span>-&gt;元素<span class="number">2</span></span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> a = (<span class="number">1</span>, <span class="string">"张三"</span>, <span class="number">20</span>, <span class="string">"北京市"</span>) </span><br><span class="line">a: (<span class="type">Int</span>, <span class="type">String</span>, <span class="type">Int</span>, <span class="type">String</span>) = (<span class="number">1</span>,张三,<span class="number">20</span>,北京市)</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> b = <span class="number">1</span>-&gt;<span class="number">2</span> </span><br><span class="line">b: (<span class="type">Int</span>, <span class="type">Int</span>) = (<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 访问元组_1、_2、_3....</span></span><br><span class="line"><span class="comment">// 获取元组中的第一个元素</span></span><br><span class="line">scala&gt; a._1</span><br><span class="line">res18: <span class="type">Int</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//不能修改元组中的值</span></span><br><span class="line">scala&gt; a._4=<span class="string">"上海"</span></span><br><span class="line">&lt;console&gt;:<span class="number">12</span>: error: reassignment to <span class="keyword">val</span></span><br><span class="line">       a._4=<span class="string">"上海"</span></span><br><span class="line">           ^</span><br></pre></td></tr></table></figure>
+
+<h3 id="映射Map"><a href="#映射Map" class="headerlink" title="映射Map"></a>映射Map</h3><ul>
+<li>Map可以称之为映射。它是由键值对组成的集合。scala当中的Map集合与java当中的Map类似，也是key，value对形式的。</li>
+<li>在scala中，Map也分为不可变Map和可变Map。</li>
+</ul>
+<h4 id="不可变Map"><a href="#不可变Map" class="headerlink" title="不可变Map"></a>不可变Map</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> map = <span class="type">Map</span>(键-&gt;值, 键-&gt;值, 键-&gt;值...)    <span class="comment">// 推荐，可读性更好 </span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> map = <span class="type">Map</span>((键, 值), (键, 值), (键, 值), (键, 值)...)</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> map1 = <span class="type">Map</span>(<span class="string">"zhangsan"</span>-&gt;<span class="number">30</span>, <span class="string">"lisi"</span>-&gt;<span class="number">40</span>) </span><br><span class="line">map: scala.collection.immutable.<span class="type">Map</span>[<span class="type">String</span>,<span class="type">Int</span>] = <span class="type">Map</span>(zhangsan -&gt; <span class="number">30</span>, lisi -&gt; <span class="number">40</span>)</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">val</span> map2 = <span class="type">Map</span>((<span class="string">"zhangsan"</span>, <span class="number">30</span>), (<span class="string">"lisi"</span>, <span class="number">30</span>)) </span><br><span class="line">map: scala.collection.immutable.<span class="type">Map</span>[<span class="type">String</span>,<span class="type">Int</span>] = <span class="type">Map</span>(zhangsan -&gt; <span class="number">30</span>, lisi -&gt; <span class="number">30</span>)</span><br><span class="line"><span class="comment">// 根据key获取value </span></span><br><span class="line">scala&gt; map1(<span class="string">"zhangsan"</span>) </span><br><span class="line">res10: <span class="type">Int</span> = <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="可变Map"><a href="#可变Map" class="headerlink" title="可变Map"></a>可变Map</h4><p>可变Map需要手动导入<code>import scala.collection.mutable.Map</code>, 定义语法与不可变Map一致</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//导包</span></span><br><span class="line">scala&gt; <span class="keyword">import</span> scala.collection.mutable.<span class="type">Map</span></span><br><span class="line"><span class="keyword">import</span> scala.collection.mutable.<span class="type">Map</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义可变的map</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> map3 = <span class="type">Map</span>(<span class="string">"zhangsan"</span>-&gt;<span class="number">30</span>, <span class="string">"lisi"</span>-&gt;<span class="number">40</span>)</span><br><span class="line">map3: scala.collection.mutable.<span class="type">Map</span>[<span class="type">String</span>,<span class="type">Int</span>] = <span class="type">Map</span>(lisi -&gt; <span class="number">40</span>, zhangsan -&gt; <span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取zhangsan这个key对应的value</span></span><br><span class="line">scala&gt; map3(<span class="string">"zhangsan"</span>)</span><br><span class="line">res26: <span class="type">Int</span> = <span class="number">30</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//给zhangsan这个key重新赋值value</span></span><br><span class="line">scala&gt; map3(<span class="string">"zhangsan"</span>)=<span class="number">50</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//显示map3</span></span><br><span class="line">scala&gt; map3</span><br><span class="line">res28: scala.collection.mutable.<span class="type">Map</span>[<span class="type">String</span>,<span class="type">Int</span>] = <span class="type">Map</span>(lisi -&gt; <span class="number">40</span>, zhangsan -&gt; <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Map基本操作"><a href="#Map基本操作" class="headerlink" title="Map基本操作"></a>Map基本操作</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取zhangsan的年龄 </span></span><br><span class="line">scala&gt; map(<span class="string">"zhangsan"</span>)</span><br><span class="line">res10: <span class="type">Int</span> = <span class="number">30</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取wangwu的年龄，如果wangwu不存在，则返回-1 比较友好，避免遇到不存在的key而报错</span></span><br><span class="line">scala&gt; map.getOrElse(<span class="string">"wangwu"</span>, <span class="number">-1</span>) </span><br><span class="line">res11: <span class="type">Int</span> = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改key对应的value</span></span><br><span class="line">scala&gt; map(<span class="string">"lisi"</span>)=<span class="number">50</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加key-value键值对</span></span><br><span class="line">scala&gt; map+=(<span class="string">"wangwu"</span> -&gt;<span class="number">35</span>)</span><br><span class="line">res12: map<span class="class">.<span class="keyword">type</span> </span>= <span class="type">Map</span>(lisi -&gt; <span class="number">50</span>, zhangsan -&gt; <span class="number">30</span>, wangwu -&gt; <span class="number">35</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除key-value键值对</span></span><br><span class="line">scala&gt; map -=<span class="string">"wangwu"</span></span><br><span class="line">res13: map<span class="class">.<span class="keyword">type</span> </span>= <span class="type">Map</span>(lisi -&gt; <span class="number">50</span>, zhangsan -&gt; <span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取所有的key</span></span><br><span class="line">scala&gt; map.keys</span><br><span class="line">res36: <span class="type">Iterable</span>[<span class="type">String</span>] = <span class="type">Set</span>(lisi, zhangsan)</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取所有的key</span></span><br><span class="line">scala&gt; map.keySet</span><br><span class="line">res37: scala.collection.<span class="type">Set</span>[<span class="type">String</span>] = <span class="type">Set</span>(lisi, zhangsan)</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取所有的value</span></span><br><span class="line">scala&gt; map.values</span><br><span class="line">res38: <span class="type">Iterable</span>[<span class="type">Int</span>] = <span class="type">HashMap</span>(<span class="number">50</span>, <span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="遍历map"><a href="#遍历map" class="headerlink" title="遍历map"></a>遍历map</h5><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一种遍历</span></span><br><span class="line">scala&gt; <span class="keyword">for</span>(k &lt;- map.keys) println(k + <span class="string">" -&gt; "</span> + map(k))</span><br><span class="line">lisi -&gt; <span class="number">50</span></span><br><span class="line">zhangsan -&gt; <span class="number">30</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//第二种遍历</span></span><br><span class="line">scala&gt; <span class="keyword">for</span>((k,v) &lt;- map) println(k + <span class="string">" -&gt; "</span> + v)	</span><br><span class="line">lisi -&gt; <span class="number">50</span></span><br><span class="line">zhangsan -&gt; <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Set集合"><a href="#Set集合" class="headerlink" title="Set集合"></a>Set集合</h3><ul>
+<li>Set是代表没有重复元素的集合。</li>
+<li>Set具备以下性质：<ul>
+<li>1、元素不重复 </li>
+<li>2、不保证插入顺序</li>
+</ul>
+</li>
+<li>scala中的集也分为两种，一种是不可变集合，另一种是可变集合。</li>
+</ul>
+<h4 id="不可变Set集合"><a href="#不可变Set集合" class="headerlink" title="不可变Set集合"></a>不可变Set集合</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个空的不可变集</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 变量名 = <span class="type">Set</span>[类型]()</span><br><span class="line"></span><br><span class="line"><span class="comment">//给定元素来创建一个不可变集</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 变量名 = <span class="type">Set</span>[类型](元素<span class="number">1</span>, 元素<span class="number">2</span>, 元素<span class="number">3.</span>..)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建set集合 </span></span><br><span class="line">scala&gt; <span class="keyword">val</span> a = <span class="type">Set</span>(<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>) </span><br><span class="line">a: scala.collection.immutable.<span class="type">Set</span>[<span class="type">Int</span>] = <span class="type">Set</span>(<span class="number">5</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取集合的大小 </span></span><br><span class="line">scala&gt; a.size </span><br><span class="line">res0: <span class="type">Int</span> = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历集合</span></span><br><span class="line">scala&gt; <span class="keyword">for</span>(i &lt;- a) println(i)</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加元素生成新的集合</span></span><br><span class="line">scala&gt; a + <span class="number">6</span></span><br><span class="line">res1: scala.collection.immutable.<span class="type">Set</span>[<span class="type">Int</span>] = <span class="type">Set</span>(<span class="number">5</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除一个元素 </span></span><br><span class="line">scala&gt; a - <span class="number">1</span> </span><br><span class="line">res2: scala.collection.immutable.<span class="type">Set</span>[<span class="type">Int</span>] = <span class="type">Set</span>(<span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除set集合中存在的元素 </span></span><br><span class="line">scala&gt; a -- <span class="type">Set</span>(<span class="number">2</span>,<span class="number">3</span>) </span><br><span class="line">res3: scala.collection.immutable.<span class="type">Set</span>[<span class="type">Int</span>] = <span class="type">Set</span>(<span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 拼接两个集合 </span></span><br><span class="line">scala&gt; a ++ <span class="type">Set</span>(<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>) </span><br><span class="line">res4: scala.collection.immutable.<span class="type">Set</span>[<span class="type">Int</span>] = <span class="type">Set</span>(<span class="number">5</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//求2个Set集合的交集</span></span><br><span class="line">scala&gt; a &amp; <span class="type">Set</span>(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</span><br><span class="line">res5: scala.collection.immutable.<span class="type">Set</span>[<span class="type">Int</span>] = <span class="type">Set</span>(<span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：这里对不可变的set集合进行添加删除等操作，对于该集合来说是没有发生任何变化，这里是生成了新的集合，新的集合相比于原来的集合来说发生了变化</p>
+</blockquote>
+<h4 id="可变Set集合"><a href="#可变Set集合" class="headerlink" title="可变Set集合"></a>可变Set集合</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//导包</span></span><br><span class="line">scala&gt; <span class="keyword">import</span> scala.collection.mutable.<span class="type">Set</span></span><br><span class="line"><span class="keyword">import</span> scala.collection.mutable.<span class="type">Set</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义可变的set集合</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> set=<span class="type">Set</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line">set: scala.collection.mutable.<span class="type">Set</span>[<span class="type">Int</span>] = <span class="type">Set</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加单个元素</span></span><br><span class="line">scala&gt; set +=<span class="number">6</span></span><br><span class="line">res10: set<span class="class">.<span class="keyword">type</span> </span>= <span class="type">Set</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加多个元素</span></span><br><span class="line">scala&gt; set += (<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>)</span><br><span class="line">res11: set<span class="class">.<span class="keyword">type</span> </span>= <span class="type">Set</span>(<span class="number">9</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加一个set集合中的元素</span></span><br><span class="line">scala&gt; set ++=<span class="type">Set</span>(<span class="number">10</span>,<span class="number">11</span>)</span><br><span class="line">res12: set<span class="class">.<span class="keyword">type</span> </span>= <span class="type">Set</span>(<span class="number">9</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">11</span>, <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除一个元素</span></span><br><span class="line">scala&gt; set -=<span class="number">11</span></span><br><span class="line">res13: set<span class="class">.<span class="keyword">type</span> </span>= <span class="type">Set</span>(<span class="number">9</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除多个元素</span></span><br><span class="line">scala&gt; set -= (<span class="number">9</span>,<span class="number">10</span>)</span><br><span class="line">res15: set<span class="class">.<span class="keyword">type</span> </span>= <span class="type">Set</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除一个set子集</span></span><br><span class="line">scala&gt; set --= <span class="type">Set</span>(<span class="number">7</span>,<span class="number">8</span>)</span><br><span class="line">res19: set<span class="class">.<span class="keyword">type</span> </span>= <span class="type">Set</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">scala&gt; set.remove(<span class="number">1</span>)</span><br><span class="line">res17: <span class="type">Boolean</span> = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">scala&gt; set</span><br><span class="line">res18: scala.collection.mutable.<span class="type">Set</span>[<span class="type">Int</span>] = <span class="type">Set</span>(<span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="列表-List"><a href="#列表-List" class="headerlink" title="列表 List"></a>列表 List</h3><ul>
+<li>List是scala中最重要的、也是最常用的数据结构</li>
+<li>List具备以下性质：<ul>
+<li>1、可以保存重复的值 </li>
+<li>2、有先后顺序</li>
+</ul>
+</li>
+<li>在scala中，也有两种列表，一种是不可变列表、另一种是可变列表</li>
+</ul>
+<h4 id="不可变列表"><a href="#不可变列表" class="headerlink" title="不可变列表"></a>不可变列表</h4><ul>
+<li>不可变列表就是列表的元素、长度都是不可变的</li>
+<li>语法<ul>
+<li>使用 List(元素1, 元素2, 元素3, …) 来创建一个不可变列表，语法格式</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 变量名 = <span class="type">List</span>(元素<span class="number">1</span>, 元素<span class="number">2</span>, 元素<span class="number">3.</span>..)</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用 Nil 创建一个不可变的空列表</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 变量名 = <span class="type">Nil</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用 :: 方法创建一个不可变列表</span></span><br><span class="line"><span class="keyword">val</span>/<span class="keyword">var</span> 变量名 = 元素<span class="number">1</span> :: 元素<span class="number">2</span> :: <span class="type">Nil</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//创建一个不可变列表，存放以下几个元素（1,2,3,4）</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> list1 = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">list1: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用Nil创建一个不可变的空列表</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> list2 = <span class="type">Nil</span></span><br><span class="line">list2: scala.collection.immutable.<span class="type">Nil</span><span class="class">.<span class="keyword">type</span> </span>= <span class="type">List</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用 :: 方法创建列表，包含1、2、3三个元素</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> list3 = <span class="number">1</span>::<span class="number">2</span>::<span class="number">3</span>::<span class="type">Nil</span></span><br><span class="line">list3: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="可变列表"><a href="#可变列表" class="headerlink" title="可变列表"></a>可变列表</h4><ul>
+<li>可变列表就是列表的元素、长度都是可变的。</li>
+<li>要使用可变列表，先要导入 <code>import scala.collection.mutable.ListBuffer</code></li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//导包</span></span><br><span class="line">scala&gt; <span class="keyword">import</span> scala.collection.mutable.<span class="type">ListBuffer</span></span><br><span class="line"><span class="keyword">import</span> scala.collection.mutable.<span class="type">ListBuffer</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个空的可变列表</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> a=<span class="type">ListBuffer</span>[<span class="type">Int</span>]()</span><br><span class="line">a: scala.collection.mutable.<span class="type">ListBuffer</span>[<span class="type">Int</span>] = <span class="type">ListBuffer</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个有初始元素的可变列表</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> b=<span class="type">ListBuffer</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">b: scala.collection.mutable.<span class="type">ListBuffer</span>[<span class="type">Int</span>] = <span class="type">ListBuffer</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="列表操作"><a href="#列表操作" class="headerlink" title="列表操作"></a>列表操作</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//导包</span></span><br><span class="line">scala&gt; <span class="keyword">import</span> scala.collection.mutable.<span class="type">ListBuffer</span></span><br><span class="line"><span class="keyword">import</span> scala.collection.mutable.<span class="type">ListBuffer</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个可变的列表</span></span><br><span class="line">scala&gt; <span class="keyword">val</span> list=<span class="type">ListBuffer</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">list: scala.collection.mutable.<span class="type">ListBuffer</span>[<span class="type">Int</span>] = <span class="type">ListBuffer</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取第一个元素</span></span><br><span class="line">scala&gt; list(<span class="number">0</span>)</span><br><span class="line">res4: <span class="type">Int</span> = <span class="number">1</span></span><br><span class="line"><span class="comment">//获取第一个元素</span></span><br><span class="line">scala&gt; list.head</span><br><span class="line">res5: <span class="type">Int</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取除了第一个元素外其他元素组成的列表</span></span><br><span class="line">scala&gt; list.tail</span><br><span class="line">res6: scala.collection.mutable.<span class="type">ListBuffer</span>[<span class="type">Int</span>] = <span class="type">ListBuffer</span>(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加单个元素</span></span><br><span class="line">scala&gt; list +=<span class="number">5</span></span><br><span class="line">res7: list<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ListBuffer</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加一个不可变的列表</span></span><br><span class="line">scala&gt; list ++=<span class="type">List</span>(<span class="number">6</span>,<span class="number">7</span>)</span><br><span class="line">res8: list<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ListBuffer</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加一个可变的列表</span></span><br><span class="line">scala&gt; list ++=<span class="type">ListBuffer</span>(<span class="number">8</span>,<span class="number">9</span>)</span><br><span class="line">res9: list<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ListBuffer</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除单个元素</span></span><br><span class="line">scala&gt; list -=<span class="number">9</span></span><br><span class="line">res10: list<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ListBuffer</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除一个不可变的列表存在的元素</span></span><br><span class="line">scala&gt; list --= <span class="type">List</span>(<span class="number">7</span>,<span class="number">8</span>)</span><br><span class="line">res11: list<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ListBuffer</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除一个可变的列表存在的元素</span></span><br><span class="line">scala&gt; list --= <span class="type">ListBuffer</span>(<span class="number">5</span>,<span class="number">6</span>)</span><br><span class="line">res12: list<span class="class">.<span class="keyword">type</span> </span>= <span class="type">ListBuffer</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//可变的列表转为不可变列表</span></span><br><span class="line">scala&gt; list.toList</span><br><span class="line">res13: <span class="type">List</span>[<span class="type">Int</span>] = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//可变的列表转为不可变数组</span></span><br><span class="line">scala&gt; list.toArray</span><br><span class="line">res14: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+
+        
+        努力努力再努力
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/linlinnn">
+            <img src="/img/logo.jpg" alt="linlinnn">
+            linlinnn
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/" rel="tag">Scala</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&title=《Scala 数据类型》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&title=《Scala 数据类型》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Scala 数据类型》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/11/Scala%20%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Scala 面对对象编程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>linlinnn &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&title=《Scala 数据类型》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&title=《Scala 数据类型》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Scala 数据类型》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACo0lEQVR42u3aQW4DMQgF0N7/0qnUbZPpB8wkqp5XUTMZ87ywKfjrKx6Pn/Hq8++RfFudMf9teeDh4eG1Qq8GWn3nq9Cvn68u65PY8PDw8NZ41a05D726uV/j85jx8PDwPoGXJ8rVw+Y6kut48PDw8D6fV02j8fDw8P4rL9nEkxQ5h+Ux5AViPDw8vHt48wbY/Z9v7e/h4eHhtbbjyXbfuyIwH3h4eHgbvGq4vTJE0tyq/qXQYMPDw8M7ypts3Hmzv1qw6B02T36Fh4eHt8BL/nPPk938+lTvGlbeQsPDw8Pb4yUTnC1VVI+i6oH05NzDw8PDW+BNyg296XvF3OiK1WR6PDw8vJiXv+JsmSAvHCfgqL+Hh4eHN+YlSXM+cb4EObg38PDw8PZ4+YYbNZmCEKstrmr7LbpThoeHh3eIl/+rn7egkgJxtTCRN9jw8PDwNnhJ4lstzk629Y00HQ8PD2+Pl6TLeeo8aW7Nrxfg4eHh3cPLk+beAdA7WqqFjMK5h4eHh9fizS+bzi9LTVpif6TXeHh4eAu86hY/L9pW399LpvHw8PC2eclDOWNehji7iHh4eHgbvMehMSk3TI6fwv0IPDw8vDEv/1myxVeXYFK0jd6Jh4eHt8DLJ0g26+snm43/1rd4eHh4e7xk891o/E9KG8nC4eHh4d3Dy7f+qCpcLO9WAeVLV3h4eHiHeL2AqpP1Ll3lC1fG4OHh4Q14Z4uw1cZ/r21WOMDw8PDwFniTgyEJupeCJ2/Dw8PDey8vb2Llja68eJEHmh9UeHh4ePfw5hv0qTLH5P1PnsfDw8N7K29yHapaX01S8Ggh8PDw8D6Sd+paQF7eLSwHHh4e3hpvUgiYBBoVFCaNNDw8PLwF3uSa1KlUeHKENHt6eHh4eB3eN8cc5Ck9qTNYAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

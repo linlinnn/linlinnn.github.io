@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Spring 事务传播 | linjunhua&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="Spring 事务传播Spring有七种事务传播级别，默认是REQUIRED 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455public enum Propagation &amp;#123;	&#x2F;**	 * 使用当前的事务，如果当前没有事务，则自己新建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 事务传播">
+<meta property="og:url" content="https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/index.html">
+<meta property="og:site_name" content="linjunhua&#39;s Blog">
+<meta property="og:description" content="Spring 事务传播Spring有七种事务传播级别，默认是REQUIRED 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455public enum Propagation &amp;#123;	&#x2F;**	 * 使用当前的事务，如果当前没有事务，则自己新建">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-12T15:19:32.150Z">
+<meta property="article:modified_time" content="2020-04-12T15:55:00.223Z">
+<meta property="article:author" content="linlinnn">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="linjunhua&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/logo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">linlinnn</h5>
+          <a href="mailto:linjunhuacode@163.com" title="linjunhuacode@163.com" class="mail">linjunhuacode@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Spring 事务传播</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Spring 事务传播</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-12T15:19:32.150Z" itemprop="datePublished" class="page-time">
+  2020-04-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Spring-事务传播"><span class="post-toc-number">1.</span> <span class="post-toc-text">Spring 事务传播</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Spring 事务传播"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Spring 事务传播</h1>
+        <div class="post-meta">
+            
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Spring-事务传播"><a href="#Spring-事务传播" class="headerlink" title="Spring 事务传播"></a>Spring 事务传播</h1><p>Spring有七种事务传播级别，默认是<code>REQUIRED</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Propagation &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 使用当前的事务，如果当前没有事务，则自己新建一个事务，子方法是必须运行在一个事务中的；</span></span><br><span class="line"><span class="comment">	 * 如果当前存在事务，则加入这个事务，成为一个整体。</span></span><br><span class="line"><span class="comment">	 * &lt;p&gt;This is the default setting of a transaction annotation.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	REQUIRED(TransactionDefinition.PROPAGATION_REQUIRED),</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 如果当前有事务，则使用事务；如果当前没有事务，则不使用事务。</span></span><br><span class="line"><span class="comment">	 * 一般用于查询</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	SUPPORTS(TransactionDefinition.PROPAGATION_SUPPORTS),</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 该传播属性强制必须存在一个事务，如果不存在，则抛出异常</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	MANDATORY(TransactionDefinition.PROPAGATION_MANDATORY),</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 如果当前有事务，则挂起该事务，并且自己创建一个新的事务给自己使用；</span></span><br><span class="line"><span class="comment">	 * 如果当前没有事务，则同 REQUIRED</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	REQUIRES_NEW(TransactionDefinition.PROPAGATION_REQUIRES_NEW),</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 如果当前有事务，则把事务挂起，自己不使用事务去运行数据库操作</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	NOT_SUPPORTED(TransactionDefinition.PROPAGATION_NOT_SUPPORTED),</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 如果当前有事务存在，则抛出异常</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	NEVER(TransactionDefinition.PROPAGATION_NEVER),</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 如果当前有事务，则开启子事务（嵌套事务），嵌套事务是独立提交或者回滚；</span></span><br><span class="line"><span class="comment">	 * 如果当前没有事务，则同 REQUIRED。</span></span><br><span class="line"><span class="comment">	 * 但是如果主事务提交，则会携带子事务一起提交。</span></span><br><span class="line"><span class="comment">	 * 如果主事务回滚，则子事务会一起回滚。相反，子事务异常，则父事务可以回滚或不回滚。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	NESTED(TransactionDefinition.PROPAGATION_NESTED);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">	Propagation(<span class="keyword">int</span> value) &#123;</span><br><span class="line">		<span class="keyword">this</span>.value = value;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+
+        
+        努力努力再努力
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/linlinnn">
+            <img src="/img/logo.jpg" alt="linlinnn">
+            linlinnn
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/&title=《Spring 事务传播》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/&title=《Spring 事务传播》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring 事务传播》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/11/Scala%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Scala 数据类型</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>linlinnn &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/&title=《Spring 事务传播》 — linjunhua's Blog&pic=https://github.com/linlinnn/img/logo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/&title=《Spring 事务传播》 — linjunhua's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring 事务传播》 — linjunhua's Blog&url=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/&via=https://github.com/linlinnn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/linlinnn/2020/04/12/Spring%20%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJUlEQVR42u3a227iUAwF0P7/TzOvIzEN2/ZhBM7KE6JtcpaRanz5+Ymvx1/X8zvP7/dePz/xt3eSOxy4sLGxsb+E/bi8EnYvcNfhuw5Ecs4Xd8bGxsZex04ek6S0alpKkNWPJ3ouNjY29u3Z+R2uE8nk6NjY2NjYPfYkkSRlzKQcwsbGxr4zO2ckbaDekCAH/NdeGjY2NvbHs6stnk9+/Zb5NjY2NvYHsx/Fa9LoyUe51fOU/wobGxt7ETtPAPnKTrUVdR2+6n0KbSxsbGzsRexqGuh955+s5kxWfI6VJdjY2NgfzB6NS1vFQEJNnpWf6h+/iY2Njb2C3Wvf9Iavkzvkxc+BZR1sbGzsr2JXi4ek9VMtHibT6V5wsbGxsfex3zJGLYZmXqiUg4iNjY29gt1br5kfvdror6bPF3fAxsbGXsruhaBaGLwvoEkgsLGxsbeyq8PU6wDlgF4QJ7+PjY2NvY9d/bp/nU5OJZh5wmsOerGxsbG/nH2dAKqJJy9L3lGuFBIbNjY29iJ2bwycJ7lewuul1QMrQdjY2Nhfws6/xE+Wcnrlynyt51cpNjY29mp2dfmymhfyAOXJtfoONjY29ib2qUSVD1nLI9j46eXEho2NjX0DdnLNG/TRumR8tqQpho2Njb2J3Rum9pJZftD5wtCL0GBjY2MvYldvdGq9Zp7A8rbUi3EvNjY29mp2b8vlVHlTHR7ngcPGxsbex86XJns3PTVyqKbDwt9iY2Njfy17MuJN0tukyOkVM9HYGBsbG3sRO0kPvfRTXa9MPoDDLSdsbGzs1ex80JsfbtIGyofEhTEGNjY29jr2pESZpMBJa2lycmxsbOw7sE+VGaeClQ8JovYTNjY29gp2b6Cbr9EkSzY5Mi9mDi/oYGNjY38wu/qvPy8zotWZ8TrOZBETGxsbexN70tA/1WA6O0KI1newsbGx17FHQ9Ni86janOqVGS9SIzY2Nvbt2dWipZrGemm1sOiDjY2NfWP25Kd5IXFqAICNjY19H3a1YKg+Jm/9VIcHzY8HGxsbexG7sLY4KD+qY93ro+fhODDfxsbGxv5c9h+Xm7C8F4GMFgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
